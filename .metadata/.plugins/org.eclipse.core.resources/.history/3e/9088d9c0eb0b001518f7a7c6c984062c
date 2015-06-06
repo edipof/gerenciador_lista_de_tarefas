@@ -1,0 +1,51 @@
+package bancoDeDados;
+
+import java.sql.*;
+
+
+public class BancoDeDados {
+	public static void main( String args[] )
+	  {
+	    Connection c = null;
+	    Statement stmt = null;
+	    try {
+	      Class.forName("org.sqlite.JDBC");
+	      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+	      System.out.println("Opened database successfully");
+
+	      stmt = c.createStatement();
+	      String sql = "CREATE TABLE IF NOT EXISTS COMPANY " +
+	                   "(ID INT PRIMARY KEY     NOT NULL," +
+	                   " NAME           TEXT    NOT NULL, " + 
+	                   " AGE            INT     NOT NULL, " + 
+	                   " ADDRESS        CHAR(50), " + 
+	                   " SALARY         REAL)"; 
+	      stmt.executeUpdate(sql);
+	      stmt.close();
+	      c.close();
+	    } catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
+	    }
+	    System.out.println("Table created successfully");
+	  }
+//	private Connection conn;
+//	private Statement stm;
+//	//construtor da classe, recebe o nome de um banco ".db" como parametro
+//	public BancoDeDados() throws 
+//		SQLException, ClassNotFoundException{
+//		
+//		Class.forName("org.sqlite.JDBC");
+//		this.conn = DriverManager.getConnection("jdbc:sqlite:banco.db");
+//		this.stm = this.conn.createStatement();
+//	}
+//	
+////	public void iniciaBD(){
+////		//remove e criar tabela a 
+////		try{
+////			
+////		}catch(SQLException e){
+////			e.printStackTrace();
+////		}
+////	}
+}

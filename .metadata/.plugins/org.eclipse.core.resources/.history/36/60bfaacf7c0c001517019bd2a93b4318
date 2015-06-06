@@ -1,0 +1,12 @@
+package model;
+
+import java.sql.Date;
+
+public class TarefaProgressiva extends TarefaComData {
+
+	public TarefaProgressiva(String titulo, String descricao, Date data) {
+		super(titulo, descricao, data);
+		// TODO Auto-generated constructor stub
+	}
+
+}
