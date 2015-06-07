@@ -5,10 +5,11 @@ import java.util.ArrayList;
 
 import model.Usuario;
 
-public class ManipuladorUsuario extends ManipuladorBancoDados {
-
+public class ManipuladorUsuario {
+	
+	private ManipuladorBancoDados conexao = new ManipuladorBancoDados();
+	private ComandosSqlSingleton sql = ComandosSqlSingleton.getInstance();
 	private boolean retorno = false;
-	private ComandosSqlSingleton sql = getComandosSQL();
 	
 	public Usuario selectUsuario() throws SQLException{
 		//TODO

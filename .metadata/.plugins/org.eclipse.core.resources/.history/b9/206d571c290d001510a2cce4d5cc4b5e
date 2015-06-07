@@ -8,7 +8,6 @@ import model.Usuario;
 public class ManipuladorUsuario extends ManipuladorBancoDados {
 
 	private boolean retorno = false;
-	private ComandosSqlSingleton sql = getComandosSQL();
 	
 	public Usuario selectUsuario() throws SQLException{
 		//TODO

@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import model.Usuario;
 
 public class ManipuladorBancoDados {
-	private ComandosSqlSingleton sql = ComandosSqlSingleton.getInstance();
-	
+
 	public Connection getConnection() throws SQLException {
 		Connection con = null;
 		con = DriverManager
@@ -25,9 +24,6 @@ public class ManipuladorBancoDados {
 		}
 	}
 	
-	public ComandosSqlSingleton getComandosSQL(){
-		return sql;
-	}
 
 	
 }
