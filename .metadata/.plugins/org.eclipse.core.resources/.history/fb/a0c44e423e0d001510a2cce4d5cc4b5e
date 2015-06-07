@@ -11,43 +11,32 @@ public class ComandosSqlSingleton {
 
 	// CRUD TAREFAS POR USUARIO
 	private final String SELECT_TAREFA_SIMPLES_POR_USUARIO = "SELECT T.TITULO, T.DESCRICAO, U.NOME" 
-							+"FROM TAREFA T, USUARIO U" 
-							+"WHERE T.USUARIO_ID = ? AND DATA IS NULL" 
-							+"AND HORA IS NULL AND PROGRESSO IS NULL";
+																+"FROM TAREFA T, USUARIO U" 
+																+"WHERE T.USUARIO_ID = ? AND DATA IS NULL" 
+																+"AND HORA IS NULL AND PROGRESSO IS NULL";
 	
 	private final String SELECT_TAREFA_LEMBRETE_POR_USUARIO = "SELECT T.TITULO, T.DESCRICAO,T.HORA, U.NOME" 
-							+"FROM TAREFA T, USUARIO U" 
-							+"WHERE T.USUARIO_ID = ?" 
-							+"AND HORA IS NOT NULL AND PROGRESSO IS NULL";																
-					
+																+"FROM TAREFA T, USUARIO U" 
+																+"WHERE T.USUARIO_ID = ?" 
+																+"AND HORA IS NOT NULL AND PROGRESSO IS NULL";
+	
 	private final String SELECT_TAREFA_PROGRESSIVA_POR_USUARIO = "SELECT T.TITULO, T.DESCRICAO,T.PROGRESSO, U.NOME "
-							+ "FROM TAREFA T, USUARIO U "
-							+ "WHERE T.USUARIO_ID = ? AND HORA IS NULL "
-							+ "AND PROGRESSO IS NOT NULL";
+																+ "FROM TAREFA T, USUARIO U "
+																+ "WHERE T.USUARIO_ID = ? AND HORA IS NULL "
+																+ "AND PROGRESSO IS NOT NULL";
 	
-	private final String INSERT_TAREFA_SIMPLES_POR_USUARIO = "INSERT INTO TAREFA(TITULO, "
-			+ "DESCRICAO,USUARIO_ID) VALUES (?, ?,?);";
-	
-	private final String INSERT_TAREFA_LEMBRETE_POR_USUARIO = "INSERT INTO TAREFA(TITULO, "
-			+ "DESCRICAO,DATA,HORA, USUARIO_ID) VALUES (?, ?,?,?,?);";
-	
-	private final String INSERT_TAREFA_PROGRESSIVA_POR_USUARIO = "INSERT INTO TAREFA(TITULO, "
-			+ "DESCRICAO,DATA,PROGRESSO, USUARIO_ID) VALUES (?, ?,?,?,?);";
+	private final String INSERT_TAREFA_SIMPLES_POR_USUARIO = "";
+	private final String INSERT_TAREFA_LEMBRETE_POR_USUARIO = "";
+	private final String INSERT_TAREFA_PROGRESSIVA_POR_USUARIO = "";
 
-	private final String DELETE_TAREFA_POR_USUARIO = "DELETE FROM TAREFA WHERE ID = ?";
+	private final String DELETE_TAREFA_SIMPLES_POR_USUARIO = "";
+	private final String DELETE_TAREFA_LEMBRETE_POR_USUARIO = "";
+	private final String DELETE_TAREFA_PROGRESSIVA_POR_USUARIO = "";
 
-	private final String UPDATE_TAREFA_SIMPLES_POR_USUARIO = "UPDATE TAREFA SET TITULO = ? ,"
-			+ "DESCRICAO = ? WHERE USUARIO_ID = ?";
-	
-	private final String UPDATE_TAREFA_LEMBRETE_POR_USUARIO = "UPDATE TAREFA SET TITULO = ? ,"
-			+ "DESCRICAO = ?, HORA = ?,DATA = ? WHERE USUARIO_ID = ?";
-	
-	private final String UPDATE_TAREFA_PROGRESSIVA_POR_USUARIO = "UPDATE TAREFA SET TITULO = ? , "
-			+ "DESCRICAO = ?, DATA = ?,PROGRESSO = ? WHERE USUARIO_ID = ?";
-	
-	private final String UPDATE_PROGRESSO_TAREFA_PROGRESSIVA_POR_USUARIO = "UPDATE TAREFA SET PROGRESSO = '?' "
-			+ "WHERE ID = ?";
-	
+	private final String UPDATE_TAREFA_SIMPLES_POR_USUARIO = "";
+	private final String UPDATE_TAREFA_LEMBRETE_POR_USUARIO = "";
+	private final String UPDATE_TAREFA_PROGRESSIVA_POR_USUARIO = "";
+
 	// criando singleton
 	private ComandosSqlSingleton() {
 	}
@@ -86,14 +75,6 @@ public class ComandosSqlSingleton {
 		return SELECT_TAREFA_PROGRESSIVA_POR_USUARIO;
 	}
 
-	public static ComandosSqlSingleton getInstancia() {
-		return instancia;
-	}
-
-	public String getUPDATE_PROGRESSO_TAREFA_PROGRESSIVA_POR_USUARIO() {
-		return UPDATE_PROGRESSO_TAREFA_PROGRESSIVA_POR_USUARIO;
-	}
-
 	public String getINSERT_TAREFA_SIMPLES_POR_USUARIO() {
 		return INSERT_TAREFA_SIMPLES_POR_USUARIO;
 	}
@@ -106,8 +87,16 @@ public class ComandosSqlSingleton {
 		return INSERT_TAREFA_PROGRESSIVA_POR_USUARIO;
 	}
 
-	public String getDELETE_TAREFA_POR_USUARIO() {
-		return DELETE_TAREFA_POR_USUARIO;
+	public String getDELETE_TAREFA_SIMPLES_POR_USUARIO() {
+		return DELETE_TAREFA_SIMPLES_POR_USUARIO;
+	}
+
+	public String getDELETE_TAREFA_LEMBRETE_POR_USUARIO() {
+		return DELETE_TAREFA_LEMBRETE_POR_USUARIO;
+	}
+
+	public String getDELETE_TAREFA_PROGRESSIVA_POR_USUARIO() {
+		return DELETE_TAREFA_PROGRESSIVA_POR_USUARIO;
 	}
 
 	public String getUPDATE_TAREFA_SIMPLES_POR_USUARIO() {
