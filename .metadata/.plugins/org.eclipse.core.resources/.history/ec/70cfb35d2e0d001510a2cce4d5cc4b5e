@@ -14,17 +14,9 @@ public class ComandosSqlSingleton {
 																+"FROM TAREFA T, USUARIO U" 
 																+"WHERE T.USUARIO_ID = ? AND DATA IS NULL" 
 																+"AND HORA IS NULL AND PROGRESSO IS NULL";
-	
-	private final String SELECT_TAREFA_LEMBRETE_POR_USUARIO = "SELECT T.TITULO, T.DESCRICAO,T.HORA, U.NOME" 
-																+"FROM TAREFA T, USUARIO U" 
-																+"WHERE T.USUARIO_ID = ?" 
-																+"AND HORA IS NOT NULL AND PROGRESSO IS NULL";
-	
-	private final String SELECT_TAREFA_PROGRESSIVA_POR_USUARIO = "SELECT T.TITULO, T.DESCRICAO,T.PROGRESSO, U.NOME "
-																+ "FROM TAREFA T, USUARIO U "
-																+ "WHERE T.USUARIO_ID = ? AND HORA IS NULL "
-																+ "AND PROGRESSO IS NOT NULL";
-	
+	private final String SELECT_TAREFA_LEMBRETE_POR_USUARIO = "";
+	private final String SELECT_TAREFA_PROGRESSIVA_POR_USUARIO = "";
+
 	private final String INSERT_TAREFA_SIMPLES_POR_USUARIO = "";
 	private final String INSERT_TAREFA_LEMBRETE_POR_USUARIO = "";
 	private final String INSERT_TAREFA_PROGRESSIVA_POR_USUARIO = "";
