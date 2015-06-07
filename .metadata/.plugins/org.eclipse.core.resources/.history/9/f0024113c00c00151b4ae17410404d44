@@ -1,12 +1,7 @@
 package bancoDeDados;
 
 import java.sql.*;
-/*
- * CLASSE COM METODO MAIN PROPRIO USADAS APENAS PARA
- * CRIAR O BANCO DE DADOS.
- * 
- * NAO RODA JUNTO COM O PROGRAMA PRINCIPAL
- */
+
 
 public class CriaBancoDeDados {
 	public static void main( String args[] )
