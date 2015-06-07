@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import model.Usuario;
 import control.operacoesBD.ManipuladorBancoDados;
+import control.operacoesBD.ManipuladorTarefaSimples;
 import control.operacoesBD.ManipuladorUsuario;
 
 public class TestaUsuario {
@@ -12,7 +13,6 @@ public class TestaUsuario {
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws SQLException {
 		ManipuladorBancoDados mb = new ManipuladorUsuario();
-		
 		Usuario u1 = new Usuario();
 		u1.setNome("Édipo");
 		Usuario u2 = new Usuario();

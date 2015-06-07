@@ -6,40 +6,45 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.TarefaSimples;
 import model.Usuario;
 
-public class ManipuladorUsuario extends ManipuladorBancoDados {
-
+public class ManipuladorTarefaSimples extends ManipuladorBancoDados{
 	private boolean retorno = false;
 	private ComandosSqlSingleton sql = getComandosSQL();
 	
 	@Override
-	public ArrayList<Usuario> selectListaEntidadeComParametro(Object o){
-		//nao tem necessidade de implementar esse metodo no momento
+	public ArrayList<TarefaSimples> selectListaEntidade() {
 		return null;
 	}
 	
 	@Override
-	public ArrayList<Usuario> selectListaEntidade() {
+	public ArrayList<TarefaSimples> selectListaEntidadeComParametro(Object object) {
 		
-		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		ArrayList<TarefaSimples> listaTarefas = new ArrayList<TarefaSimples>();
+		String titulo = "";
+		String descricao = "";
+		Usuario usuario = (Usuario) object;
 		Connection con = null;
 		try{
 			con = getConnection();
-			PreparedStatement prepared = con.prepareStatement(sql.getSELECT_USUARIO());
+			PreparedStatement prepared = con.prepareStatement(sql.getSELECT_TAREFA_SIMPLES_POR_USUARIO());
+			prepared.setLong(1, usuario.getId());
 			ResultSet resultSet = prepared.executeQuery();
 			while(resultSet.next()){
-				Usuario usuario = new Usuario();
-				usuario.setId(resultSet.getLong("ID"));
-				usuario.setNome(resultSet.getString("NOME"));
-				listaUsuarios.add(usuario);
+				titulo = resultSet.getString("TITULO");
+				descricao = resultSet.getString("DESCRICAO");
+				TarefaSimples tarefa = new TarefaSimples(titulo, descricao, usuario);
+//				usuario.setId(resultSet.getLong("USUARIO_ID"));
+//				usuario.setNome(resultSet.getString("NOME"));
+				//listaTarefas.add(usuario);
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
 			closeConnnection(con);
 		}
-		return listaUsuarios;
+		return listaTarefas;
 	}
 	@Override
 	public Boolean insereEntidade(Object object){
