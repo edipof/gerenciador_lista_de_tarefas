@@ -3,9 +3,6 @@ package control.operacoesBD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-import model.Usuario;
 
 public class ManipuladorBancoDados {
 	private ComandosSqlSingleton sql = ComandosSqlSingleton.getInstance();
