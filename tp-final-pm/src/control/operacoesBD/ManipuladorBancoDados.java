@@ -3,8 +3,9 @@ package control.operacoesBD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class ManipuladorBancoDados {
+public abstract class ManipuladorBancoDados {
 	private ComandosSqlSingleton sql = ComandosSqlSingleton.getInstance();
 	
 	public Connection getConnection() throws SQLException {
@@ -26,5 +27,12 @@ public class ManipuladorBancoDados {
 		return sql;
 	}
 
+	@SuppressWarnings("rawtypes")
+	public abstract <T> ArrayList selectListaEntidade() throws SQLException;
 	
+	public abstract Boolean insereEntidade(Object o);
+	
+	public abstract void atualizaEntidade(Object o);
+	
+	public abstract Boolean removeEntidade(Object object);
 }

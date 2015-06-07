@@ -4,10 +4,10 @@ public class ComandosSqlSingleton {
 	// INSTANCIA UNICA DA CLASSE
 	private static ComandosSqlSingleton instancia;
 	// CRUD USUARIO
-	private final String SELECT_USUARIO = "SELECT NOME FROM USUARIO";
+	private final String SELECT_USUARIO = "SELECT * FROM USUARIO";
 	private final String INSERT_USUARIO = "INSERT INTO USUARIO (NOME) VALUES (?);";
 	private final String DELETE_USUARIO = "DELETE FROM USUARIO WHERE ID = ?";
-	private final String UPDATE_USUARIO = "UPDATE USUARIO SET NOME = '?' WHERE ID = ?";
+	private final String UPDATE_USUARIO = "UPDATE USUARIO SET NOME = ? WHERE ID = ?";
 
 	// CRUD TAREFAS POR USUARIO
 	private final String SELECT_TAREFA_SIMPLES_POR_USUARIO = "SELECT T.TITULO, T.DESCRICAO, U.NOME" 
