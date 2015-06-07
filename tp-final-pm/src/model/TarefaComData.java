@@ -6,8 +6,8 @@ public abstract class TarefaComData extends Tarefa {
 	
 	private Date data;
 	
-	public TarefaComData(String titulo, String descricao, Date data) {
-		super(titulo, descricao);
+	public TarefaComData(String titulo, String descricao,Usuario usuario, Date data) {
+		super(titulo, descricao, usuario);
 		this.data = data;
 	}
 	

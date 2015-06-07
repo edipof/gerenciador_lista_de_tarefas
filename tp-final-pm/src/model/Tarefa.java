@@ -5,11 +5,13 @@ public abstract class Tarefa {
 	private long id;
 	private String titulo;
 	private String descricao;
-
-	public Tarefa(String titulo, String descricao) {
+	private Usuario usuario;
+	
+	public Tarefa(String titulo, String descricao, Usuario usuario) {
 		super();
 		this.titulo = titulo;
 		this.descricao = descricao;
+		this.usuario = usuario;
 	}
 	
 	public long getId() {
@@ -24,4 +26,7 @@ public abstract class Tarefa {
 		return descricao;
 	}
 	
+	public Usuario getUsuario(){
+		return usuario;
+	}
 }
