@@ -35,9 +35,8 @@ public class ManipuladorTarefaSimples extends ManipuladorBancoDados{
 				titulo = resultSet.getString("TITULO");
 				descricao = resultSet.getString("DESCRICAO");
 				TarefaSimples tarefa = new TarefaSimples(titulo, descricao, usuario);
-//				usuario.setId(resultSet.getLong("USUARIO_ID"));
-//				usuario.setNome(resultSet.getString("NOME"));
-				//listaTarefas.add(usuario);
+				tarefa.setId(resultSet.getLong("ID"));
+				listaTarefas.add(tarefa);
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -46,14 +45,20 @@ public class ManipuladorTarefaSimples extends ManipuladorBancoDados{
 		}
 		return listaTarefas;
 	}
+	
 	@Override
-	public Boolean insereEntidade(Object object){
-		Usuario usuario = (Usuario) object;
+	public Boolean insereEntidade(Object... objects){
+		TarefaSimples tarefa = (TarefaSimples) objects[0];
+		Usuario usuario = (Usuario) objects[1];
+		
 		Connection con = null;
 		try{
 			con = getConnection();
-			PreparedStatement prepared = con.prepareStatement(sql.getINSERT_USUARIO());
-			prepared.setString(1, usuario.getNome());
+			PreparedStatement prepared = con.prepareStatement(sql.getINSERT_TAREFA_SIMPLES_POR_USUARIO());
+			prepared.setString(1, tarefa.getTitulo());
+			prepared.setString(2, tarefa.getDescricao());
+			prepared.setLong(3, usuario.getId());
+			
 			retorno = prepared.execute();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -62,16 +67,20 @@ public class ManipuladorTarefaSimples extends ManipuladorBancoDados{
 		}
 		return retorno;
 	}
+	
 	@Override
-	public void atualizaEntidade(Object object){
-		Usuario usuario = (Usuario) object;
+	public void atualizaEntidade(Object... objects){
+		
+		TarefaSimples tarefa = (TarefaSimples) objects[0];
+
 		Connection con = null;
 		
 		try{
 			con = getConnection();
-			PreparedStatement prepared = con.prepareStatement(sql.getUPDATE_USUARIO());
-			prepared.setString(1, usuario.getNome());
-			prepared.setLong(2, usuario.getId());
+			PreparedStatement prepared = con.prepareStatement(sql.getUPDATE_TAREFA_SIMPLES());
+			prepared.setString(1, tarefa.getTitulo());
+			prepared.setString(2, tarefa.getDescricao());
+			prepared.setLong(3, tarefa.getId());
 			prepared.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -79,15 +88,17 @@ public class ManipuladorTarefaSimples extends ManipuladorBancoDados{
 			closeConnnection(con);
 		}
 	}
+	
 	@Override
-	public Boolean removeEntidade(Object object){
-		Usuario usuario = (Usuario) object;
+	public Boolean removeEntidade(Object... objects){
+		TarefaSimples tarefa = (TarefaSimples)objects[0];
+		
 		Connection con = null;
 		
 		try{
 			con = getConnection();
-			PreparedStatement prepared = con.prepareStatement(sql.getDELETE_USUARIO());
-			prepared.setLong(1, usuario.getId());
+			PreparedStatement prepared = con.prepareStatement(sql.getDELETE_TAREFA());
+			prepared.setLong(1, tarefa.getId());
 			prepared.execute();
 		}catch(SQLException e){
 			e.printStackTrace();

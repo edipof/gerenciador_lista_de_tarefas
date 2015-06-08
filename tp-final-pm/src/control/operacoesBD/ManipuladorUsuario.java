@@ -42,8 +42,13 @@ public class ManipuladorUsuario extends ManipuladorBancoDados {
 		return listaUsuarios;
 	}
 	@Override
-	public Boolean insereEntidade(Object object){
-		Usuario usuario = (Usuario) object;
+	public Boolean insereEntidade(Object... objects){
+		Usuario usuario = null;
+		
+		for(Object object : objects){
+			if(objects.length == 1)
+				usuario = (Usuario) object;
+		}
 		Connection con = null;
 		try{
 			con = getConnection();
@@ -58,8 +63,14 @@ public class ManipuladorUsuario extends ManipuladorBancoDados {
 		return retorno;
 	}
 	@Override
-	public void atualizaEntidade(Object object){
-		Usuario usuario = (Usuario) object;
+	public void atualizaEntidade(Object... objects){
+		Usuario usuario = null;
+		
+		for(Object object : objects){
+			if(objects.length == 1)
+				usuario = (Usuario) object;
+		}
+		
 		Connection con = null;
 		
 		try{
@@ -75,8 +86,13 @@ public class ManipuladorUsuario extends ManipuladorBancoDados {
 		}
 	}
 	@Override
-	public Boolean removeEntidade(Object object){
-		Usuario usuario = (Usuario) object;
+	public Boolean removeEntidade(Object... objects){
+		Usuario usuario = null;
+		
+		for(Object object : objects){
+			if(objects.length == 1)
+				usuario = (Usuario) object;
+		}
 		Connection con = null;
 		
 		try{

@@ -33,9 +33,9 @@ public abstract class ManipuladorBancoDados {
 	@SuppressWarnings("rawtypes")
 	public abstract <T> ArrayList selectListaEntidadeComParametro(Object o) throws SQLException;
 	
-	public abstract Boolean insereEntidade(Object o);
+	public abstract Boolean insereEntidade(Object... objects);
 	
-	public abstract void atualizaEntidade(Object o);
+	public abstract void atualizaEntidade(Object... objects);
 	
-	public abstract Boolean removeEntidade(Object object);
+	public abstract Boolean removeEntidade(Object... objects);
 }

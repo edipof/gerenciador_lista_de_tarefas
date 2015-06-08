@@ -1,0 +1,20 @@
+package control;
+
+import java.sql.SQLException;
+
+import model.Usuario;
+import control.operacoesBD.ManipuladorBancoDados;
+import control.operacoesBD.ManipuladorTarefaSimples;
+import control.operacoesBD.ManipuladorUsuario;
+
+public class TestaTarefas {
+
+	public static void main(String[] args) throws SQLException {
+		ManipuladorBancoDados usuarioDTO = new ManipuladorUsuario();
+		ManipuladorBancoDados tarefaDTO = new ManipuladorTarefaSimples();
+		
+		Usuario usuario = (Usuario) usuarioDTO.selectListaEntidade().get(0);
+		
+	}
+
+}

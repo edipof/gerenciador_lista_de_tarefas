@@ -29,4 +29,21 @@ public abstract class Tarefa {
 	public Usuario getUsuario(){
 		return usuario;
 	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import model.Usuario;
 import control.operacoesBD.ManipuladorBancoDados;
-import control.operacoesBD.ManipuladorTarefaSimples;
 import control.operacoesBD.ManipuladorUsuario;
 
 public class TestaUsuario {
@@ -21,27 +20,28 @@ public class TestaUsuario {
 		u3.setNome("Bruno");
 		Usuario u4 = new Usuario();
 		u4.setNome("Barsand");
-		
-//		mb.insereEntidade(u1);
-//		mb.insereEntidade(u2);
-//		mb.insereEntidade(u3);
-//		mb.insereEntidade(u4);
-//		
+/*		
+		mb.insereEntidade(u1);
+		mb.insereEntidade(u2);
+		mb.insereEntidade(u3);
+		mb.insereEntidade(u4);
+*/		
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
-//		listaUsuarios =  mb.selectListaEntidade();
-//		
-//		for (Usuario usuario : listaUsuarios) {
-//			System.out.println(usuario.getId() + " " + usuario.getNome());
-//			if(usuario.getNome().equals(u1.getNome()))
-//				u1 = usuario;
-//		}
-//		
-//		u1.setNome("Édipo o/");
-//		mb.atualizaEntidade(u1);
-//		
+		listaUsuarios =  mb.selectListaEntidade();
+
+		for (Usuario usuario : listaUsuarios) {
+			System.out.println(usuario.getId() + " " + usuario.getNome());
+			if(usuario.getNome().equals(u1.getNome()))
+				u1 = usuario;
+		}
+
+/*
+		u1.setNome("Édipo o/");
+		mb.atualizaEntidade(u1);
+		
 		Usuario uRemove = new Usuario();
 		uRemove.setNome("remove");
-		//mb.insereEntidade(uRemove);
+		mb.insereEntidade(uRemove);
 		
 		listaUsuarios =  mb.selectListaEntidade();
 		for (Usuario usuario : listaUsuarios) {
@@ -49,7 +49,7 @@ public class TestaUsuario {
 			if(usuario.getNome().equals("remove"))
 				mb.removeEntidade(usuario);
 		}
-		
+*/		
 
 	}
 

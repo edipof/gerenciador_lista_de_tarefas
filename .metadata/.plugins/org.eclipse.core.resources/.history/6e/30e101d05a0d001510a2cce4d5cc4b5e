@@ -1,0 +1,34 @@
+package control.operacoesBD;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import model.Tarefa;
+
+public class ManipuladorTarefaSimples extends ManipuladorBancoDados{
+
+	@Override
+	public <TarefaSimples> ArrayList selectListaEntidade() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean insereEntidade(Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void atualizaEntidade(Object o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Boolean removeEntidade(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,14 @@
+package control;
+
+import control.operacoesBD.ManipuladorBancoDados;
+import control.operacoesBD.ManipuladorTarefaSimples;
+import control.operacoesBD.ManipuladorUsuario;
+
+public class TestaTarefas {
+
+	public static void main(String[] args) {
+		ManipuladorBancoDados usuarioDTO = new ManipuladorUsuario();
+		ManipuladorBancoDados tarefaDTO = new ManipuladorTarefaSimples();
+	}
+
+}
