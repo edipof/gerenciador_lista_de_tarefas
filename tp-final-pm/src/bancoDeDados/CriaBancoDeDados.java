@@ -27,7 +27,7 @@ public class CriaBancoDeDados {
 	      		+ "( ID INTEGER PRIMARY KEY AUTOINCREMENT,"
 	      		+ " TITULO VARCHAR(45) ,"
 	      		+ "DESCRICAO VARCHAR(45),"
-	      		+ "DATA DATE,"
+	      		+ "DATA VARCHAR(10),"
 	      		+ "HORA VARCHAR(10),"
 	      		+ "PROGRESSO VARCHAR(45),"
 	      		+ "USUARIO_ID INTEGER NOT NULL ,"

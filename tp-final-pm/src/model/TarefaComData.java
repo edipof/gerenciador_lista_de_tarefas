@@ -1,17 +1,16 @@
 package model;
 
-import java.sql.Date;
 
 public abstract class TarefaComData extends Tarefa {
 	
-	private Date data;
+	private String data;
 	
-	public TarefaComData(String titulo, String descricao,Usuario usuario, Date data) {
+	public TarefaComData(String titulo, String descricao,Usuario usuario, String data) {
 		super(titulo, descricao, usuario);
 		this.data = data;
 	}
 	
-	public Date getData(){
+	public String getData(){
 		return data;
 	}
 }
