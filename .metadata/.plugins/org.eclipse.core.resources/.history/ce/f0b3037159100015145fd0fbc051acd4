@@ -1,5 +1,0 @@
-package dao;
-
-public class DaoTarefaSimples extends DAO<T, P> {
-
-}

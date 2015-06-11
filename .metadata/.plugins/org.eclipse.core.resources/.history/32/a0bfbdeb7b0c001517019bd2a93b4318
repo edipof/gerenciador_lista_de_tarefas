@@ -1,9 +1,0 @@
-package model;
-
-public abstract class Tarefa {
-	private long id;
-	private String titulo;
-	private String descricao;
-	
-	
-}

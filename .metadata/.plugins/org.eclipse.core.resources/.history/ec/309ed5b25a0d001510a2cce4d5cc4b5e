@@ -1,9 +1,0 @@
-package control.operacoesBD;
-
-import java.util.ArrayList;
-
-import model.Tarefa;
-
-public class ManipuladorTarefaSimples extends ManipuladorBancoDados{
-
-}

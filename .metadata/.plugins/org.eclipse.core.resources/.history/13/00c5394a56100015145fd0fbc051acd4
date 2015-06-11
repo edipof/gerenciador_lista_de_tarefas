@@ -1,5 +1,0 @@
-package dao;
-
-public class DaoUsuario extends DAO<T, P> {
-
-}

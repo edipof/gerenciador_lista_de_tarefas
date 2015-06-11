@@ -1,5 +1,0 @@
-package model.dao;
-
-public class DaoTarefaProgressiva extends DAO<T, P> {
-
-}
