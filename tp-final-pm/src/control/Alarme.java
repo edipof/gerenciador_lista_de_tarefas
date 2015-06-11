@@ -3,7 +3,7 @@ package control;
 public class Alarme implements Runnable{
 	
 	public Alarme(){
-		Alarme a = new Alarme();
+		Thread a = new Thread(new Alarme());
 		a.run();
 	}
 	@Override
