@@ -2,15 +2,14 @@ package control;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import model.Lembrete;
 import model.TarefaSimples;
 import model.Usuario;
-import control.operacoesBD.ManipuladorBancoDados;
-import control.operacoesBD.ManipuladorTarefaLembrete;
-import control.operacoesBD.ManipuladorTarefaSimples;
-import control.operacoesBD.ManipuladorUsuario;
+import model.operacoesBD.ManipuladorBancoDados;
+import model.operacoesBD.ManipuladorTarefaLembrete;
+import model.operacoesBD.ManipuladorTarefaSimples;
+import model.operacoesBD.ManipuladorUsuario;
 
 public class TestaTarefas {
 	
@@ -24,10 +23,10 @@ public class TestaTarefas {
 		Usuario usuario2 = (Usuario) usuarioDTO.selectListaEntidade().get(1);
 		
 		//insere
-		/*String titulo = "Tarefa Simples | ";
+		String titulo = "Tarefa Simples | ";
 		String descricao = "Descricao Lembrete |";
 		TarefaSimples tarefaSimples = new TarefaSimples(titulo, descricao, usuario1);
-		//tarefaDTO.insereEntidade(tarefaSimples, usuario1);
+		tarefaDTO.insereEntidade(tarefaSimples, usuario1);
 		
 		//select
 		ArrayList<TarefaSimples> listaTarefaSimples = new ArrayList<TarefaSimples>();
@@ -35,17 +34,17 @@ public class TestaTarefas {
 		
 		for (TarefaSimples tarefa : listaTarefaSimples) {
 			System.out.println(tarefa.getTitulo()+ " " + tarefa.getDescricao() + " " + tarefa.getUsuario().getNome());
-		}*/
+		}
 		
-		String titulo = "Lembrete | ";
-		String descricao = "Descricao Lembrete |";
+		String tituloL = "Lembrete | ";
+		String descricaoL = "Descricao Lembrete |";
 		String data = "08/06/2015";
 		String hora = "09:18";
 		/**/
 		//criando lembrete
-		Lembrete lembrete = new Lembrete(titulo, descricao, usuario1, data, hora);
+		Lembrete lembrete = new Lembrete(tituloL, descricaoL, usuario1, data, hora);
 		//inserindo lembrete
-		//lembreteDTO.insereEntidade(lembrete, usuario1);
+		lembreteDTO.insereEntidade(lembrete, usuario1);
 		
 		//select
 		ArrayList<Lembrete> listaLembrete = new ArrayList<Lembrete>();
@@ -75,13 +74,13 @@ public class TestaTarefas {
 
 		}
 		//remove
-		if(t1 != null)
+		/*if(t1 != null)
 			lembreteDTO.removeEntidade(t1);
 		listaLembrete = lembreteDTO.selectListaEntidadeComParametro(usuario1);
 		for (Lembrete tarefa : listaLembrete) {
 			System.out.println(tarefa.getTitulo()+ " " + tarefa.getDescricao() + " " + tarefa.getUsuario().getNome()
 					+ " " + tarefa.getData() + " " + tarefa.getHora());
-		}
+		}*/
 	}
 
 }

@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Usuario;
-import control.operacoesBD.ManipuladorBancoDados;
-import control.operacoesBD.ManipuladorUsuario;
+import model.operacoesBD.ManipuladorBancoDados;
+import model.operacoesBD.ManipuladorUsuario;
 
 public class TestaUsuario {
 
