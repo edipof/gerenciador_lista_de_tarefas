@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -13,24 +14,28 @@ public class TelaInicial extends JFrame {
 	private JPanel painel;
 	public void exibirTela(){
 		prepararJanela();
-		preparPainelPrincipal();
-		inserirUsuario();
+		preparPainelUsuario();
 		BotaoSair();
 		mostrarJanela();
 	}
 
 	private void inserirUsuario() {
-		// TODO Stub de método gerado automaticamente
-		JLabel usuario = new JLabel("Novo Usuario");
 		
+		JPanel painelUsuario = new JPanel();
+		painelUsuario.add(new JLabel("Usuário: "));
+		painelUsuario.add(new JTextField("Insira um novo Usuário"));
+		
+		JPanel painelUsuarioBotao = new JPanel();
+		painelUsuarioBotao.add(new JButton("Iniciar"));
+		
+		painel.add(painelUsuario, BorderLayout.WEST);
+		painel.add(painelUsuarioBotao, BorderLayout.EAST);
 	}
 
 	private void prepararJanela() {
 		// TODO Stub de método gerado automaticamente
-		tela = new JFrame("ÉFIFO");
+		tela = new JFrame("ÉFIFO - Gerenciador de Tarefas");
 		tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-        setLayout(new FlowLayout());
 	}
 
 	private void BotaoSair() {
@@ -45,15 +50,18 @@ public class TelaInicial extends JFrame {
 		painel.add(botaoSair);
 	}
 
-	private void preparPainelPrincipal() {
+	private void preparPainelUsuario() {
 		// TODO Stub de método gerado automaticamente
 		painel = new JPanel();
-		tela.add(painel);
+		
+		//painel.setBounds(101, 650, 480, 173);
+		inserirUsuario();
+		tela.setContentPane(painel);
+		
 	}
 
 	private void mostrarJanela() {
 		// TODO Stub de método gerado automaticamente
-		tela.pack();
 		tela.setSize(500, 250);
 		tela.setVisible(true);	
 	}
