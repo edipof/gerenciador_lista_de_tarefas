@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.Date;
 
 public class TarefaProgressiva extends TarefaComData {
 	private long progresso;

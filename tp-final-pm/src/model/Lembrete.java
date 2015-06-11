@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Date;
 
 public class Lembrete extends TarefaComData {
 	private String hora;

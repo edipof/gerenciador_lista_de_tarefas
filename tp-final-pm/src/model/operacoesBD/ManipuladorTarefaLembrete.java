@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import model.Lembrete;
 import model.Usuario;
 
-public class ManipuladorTarefaLembrete extends ManipuladorBancoDados {
+public class ManipuladorTarefaLembrete extends ManipuladorBancoDados<Lembrete> {
 	private boolean retorno = false;
 	private ComandosSqlSingleton sql = getComandosSQL();
 	
