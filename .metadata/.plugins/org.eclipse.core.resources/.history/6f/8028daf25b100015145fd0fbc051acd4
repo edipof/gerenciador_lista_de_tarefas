@@ -1,0 +1,8 @@
+package model.dao;
+
+import model.Lembrete;
+import model.Usuario;
+
+public class DaoLembrete extends DAO<Lembrete, Usuario> {
+
+}

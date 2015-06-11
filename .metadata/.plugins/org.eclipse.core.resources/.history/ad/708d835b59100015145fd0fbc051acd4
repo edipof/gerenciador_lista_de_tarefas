@@ -1,0 +1,13 @@
+package dao;
+
+import java.util.ArrayList;
+
+import model.TarefaSimples;
+
+public class DaoTarefaSimples extends DaoTarefa {
+	@Override
+	public ArrayList<TarefaSimples> getLista() {
+		// TODO Auto-generated method stub
+		return super.getLista();
+	}
+}

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import model.TarefaProgressiva;
 import model.Usuario;
 
-public class ManipuladorTarefaProgressiva extends ManipuladorBancoDados {
+public class ManipuladorTarefaProgressiva extends ManipuladorBancoDados<TarefaProgressiva> {
 	private boolean retorno = false;
 	private ComandosSqlSingleton sql = getComandosSQL();
 	

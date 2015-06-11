@@ -1,0 +1,8 @@
+package dao;
+
+import model.Tarefa;
+import model.Usuario;
+
+public abstract class DaoTarefa extends DAO<Tarefa, Usuario> {
+
+}

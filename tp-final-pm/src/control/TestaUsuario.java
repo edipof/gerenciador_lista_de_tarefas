@@ -9,7 +9,6 @@ import model.operacoesBD.ManipuladorUsuario;
 
 public class TestaUsuario {
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws SQLException {
 		ManipuladorBancoDados mb = new ManipuladorUsuario();
 		Usuario u1 = new Usuario();

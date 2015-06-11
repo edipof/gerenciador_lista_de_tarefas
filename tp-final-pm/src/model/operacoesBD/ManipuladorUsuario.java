@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import model.Usuario;
 
-public class ManipuladorUsuario extends ManipuladorBancoDados {
+public class ManipuladorUsuario extends ManipuladorBancoDados<Usuario> {
 
 	private boolean retorno = false;
 	private ComandosSqlSingleton sql = getComandosSQL();

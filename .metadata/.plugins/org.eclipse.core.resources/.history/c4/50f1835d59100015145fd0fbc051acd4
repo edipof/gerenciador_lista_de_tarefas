@@ -1,0 +1,33 @@
+package dao;
+
+import java.util.ArrayList;
+
+import model.Tarefa;
+import model.Usuario;
+
+public abstract class DaoTarefa extends DAO<Tarefa, Usuario> {
+	
+	@Override
+	public ArrayList<Tarefa> getLista() {
+		// TODO Auto-generated method stub
+		return super.getLista();
+	}
+	
+	@Override
+	public void insere(Tarefa tarefa, Usuario usuario) {
+		// TODO Auto-generated method stub
+		super.insere(tarefa, usuario);
+	}
+	
+	@Override
+	public void atualiza(Tarefa tarefa) {
+		// TODO Auto-generated method stub
+		super.atualiza(tarefa);
+	}
+	
+	@Override
+	public void delete(Tarefa tarefa) {
+		// TODO Auto-generated method stub
+		super.delete(tarefa);
+	}
+}

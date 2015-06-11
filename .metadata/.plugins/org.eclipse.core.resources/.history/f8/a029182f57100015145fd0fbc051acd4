@@ -1,0 +1,22 @@
+package dao;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import model.Tarefa;
+import model.Usuario;
+import model.operacoesBD.ManipuladorBancoDados;
+import model.operacoesBD.ManipuladorUsuario;
+
+public class DaoUsuario extends DAO<Usuario, Tarefa> {
+     ManipuladorBancoDados mb = new ManipuladorUsuario();
+	@Override
+	public ArrayList<Usuario> getLista() {
+		try{
+			return mb.selectListaEntidade();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+}
