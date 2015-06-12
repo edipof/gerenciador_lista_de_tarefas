@@ -1,6 +1,15 @@
 package view;
 
 import javax.swing.JTextArea;
+import javax.swing.JOptionPane;
+
+import model.Lembrete;
+import model.TarefaProgressiva;
+import model.TarefaSimples;
+import model.Usuario;
+import model.dao.DaoLembrete;
+import model.dao.DaoTarefaProgressiva;
+import model.dao.DaoTarefaSimples;
 
 public class TelaCriarTarefa extends javax.swing.JFrame {
 	
@@ -233,12 +242,74 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
     	int i = jTabbedPaneContainer.getSelectedIndex();
-     
-    	if (jTabbedPaneContainer.getComponentCount() - 1 == i){
+    	Boolean dados_inseridos = false;
+
+    	if (i == 0){
+    		String ts_titulo = jTextFieldTSTitulo.getText();
+        	String ts_desc = jTextAreaFieldTSDescricao.getText();
+    		
+        	if (ts_titulo.length() == 0 || ts_desc.length() == 0){
+    			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+    		}
+    		else{
+				DaoTarefaSimples dao_ts = new DaoTarefaSimples();
+				Usuario u = new Usuario();
+				u.setId(3);
+				u.setNome("Bruno");
+				TarefaSimples ts = new TarefaSimples(ts_titulo, ts_desc, u);
+				
+				dao_ts.insere(ts);
+				dados_inseridos = true;
+    		}
+    	}
+    	else if (i == 1){
+    		String tp_titulo = jTextFieldTPTitulo.getText();
+        	String tp_desc = jTextAreaFieldTPDescricao.getText();
+        	String tp_data = jTextFieldTPData.getText();
+        	Long tp_progresso = Long.parseLong(jTextFieldTPProgresso.getText());
+    		
+        	if (tp_titulo.length() == 0 || tp_desc.length() == 0 || tp_data.length() == 0){//Olhar tp_progresso
+    			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+    		}
+    		else{
+	    		DaoTarefaProgressiva dao_tp = new DaoTarefaProgressiva();
+	    		Usuario u = new Usuario();
+	    		u.setId(3);
+	    		u.setNome("Bruno");
+	    		TarefaProgressiva tp = new TarefaProgressiva(tp_titulo, tp_desc, u, tp_data, tp_progresso);
+	    		
+	    		dao_tp.insere(tp);
+	    		dados_inseridos = true;
+    		}
+    	}
+    	else if (i == 2){
+    		String l_titulo = jTextFieldLTitulo.getText();
+        	String l_desc = jTextAreaFieldLDescricao.getText();
+        	String l_data = jTextFieldLData.getText();
+        	String l_hora = jTextFieldLHora.getText();
+    		
+        	if (l_titulo.length() == 0 || l_desc.length() == 0 || l_data.length() == 0 || l_hora.length() == 0){
+    			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+    		}
+    		else{
+				DaoLembrete dao_l = new DaoLembrete();
+				Usuario u = new Usuario();
+				u.setId(3);
+				u.setNome("Bruno");
+				Lembrete l = new Lembrete(l_titulo, l_desc, u, l_data, l_hora);
+				
+				dao_l.insere(l);
+				dados_inseridos = true;
+    		}
+    	}
+    	if (dados_inseridos){
+    		JOptionPane.showMessageDialog(null, "Tarefa salva com sucesso");
+    	}
+    	/*if (jTabbedPaneContainer.getComponentCount() - 1 == i){
            jTabbedPaneContainer.setSelectedIndex(0);
     	}else{
     		jTabbedPaneContainer.setSelectedIndex(i+1);
-    	}
+    	}*/
     }//GEN-LAST:event_jButtonSalvarActionPerformed
   	      
 }
