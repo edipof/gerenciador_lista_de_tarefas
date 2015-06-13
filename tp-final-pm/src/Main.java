@@ -1,6 +1,7 @@
 import view.TelaCriarTarefa;
 import view.TelaInicial;
 import view.TelaCriarTarefa;
+import view.TelaVisualizacaoDeTarefas;
 
 
 public class Main {
@@ -15,7 +16,7 @@ public class Main {
 		//TelaCriarTarefa app = new TelaCriarTarefa();
 		java.awt.EventQueue.invokeLater(new Runnable() {
     		public void run() {
-    			new TelaCriarTarefa().setVisible(true);
+    			new TelaVisualizacaoDeTarefas("Édipo").setVisible(true);
     		}
     	});
 		/**
