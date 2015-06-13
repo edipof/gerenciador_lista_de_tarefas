@@ -29,6 +29,7 @@ public class TestaTarefas {
 		
 		
 		Usuario usuario1 = (Usuario) usuarioDTO.getLista().get(0);
+		System.out.println(usuario1.getNome());
 		Usuario usuario2 = (Usuario) usuarioDTO.getLista().get(1);
 		
 		//insere

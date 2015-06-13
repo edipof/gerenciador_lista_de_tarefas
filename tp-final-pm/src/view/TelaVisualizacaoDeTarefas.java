@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JTextArea;
 
@@ -18,9 +19,16 @@ import java.awt.FlowLayout;
 //import java.awt.List;
 
 
+
+
+
+
+
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -65,7 +73,7 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		return indiceUsuarioEncontrado;
 	}
 	
-	public List<String> obtemListaDeTarefasSimples(String nomeUsuario) {
+	public List<Tarefa> obtemListaDeTarefasSimples(String nomeUsuario) {
 		
 		
 		DAO<Usuario,Tarefa> usuarioDTO = new DaoUsuario();
@@ -81,18 +89,18 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		listaTarefaSimples = tarefaDTO.getLista(usuario);
 		
 		Lembrete t1 = null;
-		List<String> tarefas = new ArrayList<String>();
+		List<Tarefa> tarefas = new ArrayList<Tarefa>();
 		
 		for (TarefaSimples tarefa : listaTarefaSimples) {
 			
-			tarefas.add(tarefa.getDescricao());
+			tarefas.add(tarefa);
 		}
 		
 		return tarefas;
 
 	}
 	
-	public List<String> obtemListaDeLembretes(String nomeUsuario){ /* throws alguma excecao que nao faco ideia qual eh*/
+	public ArrayList<ArrayList<String>> obtemMatrizDeLembretes(String nomeUsuario){ /* throws alguma excecao que nao faco ideia qual eh*/
 		
 		DAO<Usuario,Tarefa> usuarioDTO = new DaoUsuario();
 		DAO<Lembrete,Usuario> lembreteDTO = new DaoLembrete();
@@ -104,12 +112,19 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		ArrayList<Lembrete> listaLembrete = new ArrayList<Lembrete>();
 		listaLembrete = lembreteDTO.getLista(usuario);
 		
-		Lembrete t1 = null;
-		List<String> lembretes = new ArrayList<String>();
+		ArrayList<ArrayList<String>> lembretes = new ArrayList<ArrayList<String>>();
 		
-		for (Lembrete tarefa : listaLembrete) {
+		for (Lembrete lembrete : listaLembrete) {
 			
-			lembretes.add(tarefa.getDescricao());
+			ArrayList<String> listaAux= new ArrayList<String>();
+			
+			listaAux.add(lembrete.getTitulo());
+			listaAux.add(lembrete.getDescricao() );
+			listaAux.add(lembrete.getUsuario().getNome());
+			listaAux.add(lembrete.getData() );
+			listaAux.add(lembrete.getHora());
+			
+			lembretes.add(listaAux);
 		}
 		
 		return lembretes;
@@ -120,20 +135,39 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
         initComponents(nomeUsuario);
     }
     
+    public JTable converteMatrizParaJTable (ArrayList<ArrayList<String>> matriz) {
+    	
+    	DefaultTableModel modelo = new DefaultTableModel();
+    	modelo.addColumn("Titulo");
+    	modelo.addColumn("Descricao");
+    	modelo.addColumn("Usuario");
+    	modelo.addColumn("Data");
+    	modelo.addColumn("Hora");
+        JTable tabela = new JTable(modelo);
+        
+    	for (ArrayList<String> i : matriz) {
+    		
+    		modelo.addRow(new Vector<Object>(i));
+    	}
+    	
+    	return tabela;
+    }
+    
   
     private void initComponents(String nomeUsuario) {
 
 //	    List lembretes = obtemListaDeLembretes(nomeUsuario);
-	    JList<String> listaLembretes = new JList(obtemListaDeLembretes(nomeUsuario).toArray());
-	    JList<String> listaTarefas = new JList(obtemListaDeTarefasSimples(nomeUsuario).toArray());
+    	
+	    JTable lembretes = converteMatrizParaJTable(obtemMatrizDeLembretes(nomeUsuario)); 
+   		//JList<String> listaTarefas = new JList(obtemListaDeTarefasSimples(nomeUsuario).toArray());
 	    
     	//(1)
     	jTabbedPaneContainer = new javax.swing.JTabbedPane();
     	jPanelTarefaSimples = new javax.swing.JPanel();
 //        jPanelTarefaProgressiva = new javax.swing.JPanel();
 //        jPanelLembrete = new javax.swing.JPanel();
-        jTabbedPaneContainer.add("Lembretes", new JScrollPane(listaLembretes));
-        jTabbedPaneContainer.add("Tarefas", new JScrollPane(listaTarefas));
+        jTabbedPaneContainer.add("Lembretes", new JScrollPane(lembretes));
+        //jTabbedPaneContainer.add("Tarefas", new JScrollPane(listaTarefas));
 
 //        jTabbedPaneContainer.add("Tarefa Progressiva", jPanelTarefaProgressiva);
 //        jTabbedPaneContainer.add("Lembrete", jPanelLembrete);
