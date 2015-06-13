@@ -1,6 +1,7 @@
 import view.TelaCriarTarefa;
 import view.TelaInicial;
 import view.TelaCriarTarefa;
+import view.TelaVisualizacaoDeTarefas;
 
 
 public class Main {

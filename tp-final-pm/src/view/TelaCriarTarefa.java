@@ -1,12 +1,14 @@
 package view;
 
-import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
+import control.AcaoCriaTarefa;
 import model.Lembrete;
 import model.TarefaProgressiva;
 import model.TarefaSimples;
 import model.Usuario;
+import model.dao.DAO;
 import model.dao.DaoLembrete;
 import model.dao.DaoTarefaProgressiva;
 import model.dao.DaoTarefaSimples;
@@ -252,13 +254,8 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
     		}
     		else{
-				DaoTarefaSimples dao_ts = new DaoTarefaSimples();
-				Usuario u = new Usuario();
-				u.setId(3);
-				u.setNome("Bruno");
-				TarefaSimples ts = new TarefaSimples(ts_titulo, ts_desc, u);
-				
-				dao_ts.insere(ts);
+    			AcaoCriaTarefa a = new AcaoCriaTarefa();
+    			a.insereTarefaSimples(ts_titulo, ts_desc);
 				dados_inseridos = true;
     		}
     	}
