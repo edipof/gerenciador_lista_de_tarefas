@@ -24,6 +24,7 @@ import java.awt.FlowLayout;
 
 
 
+
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -34,7 +35,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 	
-	private javax.swing.JButton jButtonSalvar;
+	private javax.swing.JButton jButtonEditar;
 	  
 	private javax.swing.JLabel jLabelTSTitulo;
 	private javax.swing.JLabel jLabelTSDescricao;
@@ -73,27 +74,29 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		return indiceUsuarioEncontrado;
 	}
 	
-	public List<Tarefa> obtemListaDeTarefasSimples(String nomeUsuario) {
+	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasSimples(String nomeUsuario) {
 		
 		
 		DAO<Usuario,Tarefa> usuarioDTO = new DaoUsuario();
 		DAO<TarefaSimples,Usuario> tarefaDTO = new DaoTarefaSimples();
-
 		int indiceUsuarioEncontrado = buscaUsuario(nomeUsuario);
 		
 		System.out.println("indice: " + indiceUsuarioEncontrado);
 		
 		Usuario usuario = (Usuario) usuarioDTO.getLista().get(indiceUsuarioEncontrado);
-
 		ArrayList<TarefaSimples> listaTarefaSimples = new ArrayList<TarefaSimples>();
 		listaTarefaSimples = tarefaDTO.getLista(usuario);
 		
-		Lembrete t1 = null;
-		List<Tarefa> tarefas = new ArrayList<Tarefa>();
+		ArrayList<ArrayList<String>> tarefas = new ArrayList<ArrayList<String>>();
 		
 		for (TarefaSimples tarefa : listaTarefaSimples) {
 			
-			tarefas.add(tarefa);
+			ArrayList<String> listaAux= new ArrayList<String>();
+			
+			listaAux.add(Long.toString(tarefa.getId()) );
+			listaAux.add(tarefa.getDescricao() );
+			
+			tarefas.add(listaAux);
 		}
 		
 		return tarefas;
@@ -118,9 +121,8 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 			
 			ArrayList<String> listaAux= new ArrayList<String>();
 			
-			listaAux.add(lembrete.getTitulo());
+			listaAux.add(Long.toString(lembrete.getId()) );
 			listaAux.add(lembrete.getDescricao() );
-			listaAux.add(lembrete.getUsuario().getNome());
 			listaAux.add(lembrete.getData() );
 			listaAux.add(lembrete.getHora());
 			
@@ -135,14 +137,15 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
         initComponents(nomeUsuario);
     }
     
-    public JTable converteMatrizParaJTable (ArrayList<ArrayList<String>> matriz) {
+    public JTable converteMatrizParaJTable (ArrayList<ArrayList<String>> matriz, String[] colunas) {
     	
     	DefaultTableModel modelo = new DefaultTableModel();
-    	modelo.addColumn("Titulo");
-    	modelo.addColumn("Descricao");
-    	modelo.addColumn("Usuario");
-    	modelo.addColumn("Data");
-    	modelo.addColumn("Hora");
+    	
+    	for (String coluna : colunas) {
+    		
+    		modelo.addColumn(coluna);	
+    	}
+    	
         JTable tabela = new JTable(modelo);
         
     	for (ArrayList<String> i : matriz) {
@@ -156,10 +159,13 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
   
     private void initComponents(String nomeUsuario) {
 
-//	    List lembretes = obtemListaDeLembretes(nomeUsuario);
-    	
-	    JTable lembretes = converteMatrizParaJTable(obtemMatrizDeLembretes(nomeUsuario)); 
-   		//JList<String> listaTarefas = new JList(obtemListaDeTarefasSimples(nomeUsuario).toArray());
+    	String[] colunasLembretes = {"Id", "Descricao", "Data", "Hora"};
+	    JTable lembretes = converteMatrizParaJTable(obtemMatrizDeLembretes(nomeUsuario), colunasLembretes); 
+	    
+	    String[] colunasTarefasSimples = {"Id", "Descricao"};
+	    JTable tarefasSimples = converteMatrizParaJTable(obtemMatrizDeTarefasSimples(nomeUsuario), colunasTarefasSimples);
+
+	    //JList<String> listaTarefas = new JList(obtemListaDeTarefasSimples(nomeUsuario).toArray());
 	    
     	//(1)
     	jTabbedPaneContainer = new javax.swing.JTabbedPane();
@@ -167,14 +173,14 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 //        jPanelTarefaProgressiva = new javax.swing.JPanel();
 //        jPanelLembrete = new javax.swing.JPanel();
         jTabbedPaneContainer.add("Lembretes", new JScrollPane(lembretes));
-        //jTabbedPaneContainer.add("Tarefas", new JScrollPane(listaTarefas));
+        jTabbedPaneContainer.add("Tarefas", new JScrollPane(tarefasSimples));
 
 //        jTabbedPaneContainer.add("Tarefa Progressiva", jPanelTarefaProgressiva);
 //        jTabbedPaneContainer.add("Lembrete", jPanelLembrete);
         //(2)
         jScrollPane1 = new javax.swing.JScrollPane();
         //jTextAreaObservacao = new javax.swing.JTextArea();
-        jButtonSalvar = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jLabelTSTitulo = new javax.swing.JLabel();
         jLabelTSDescricao = new javax.swing.JLabel();
         jLabelTPTitulo = new javax.swing.JLabel();
@@ -218,10 +224,10 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
         //jTextAreaObservacao.setColumns(20);
         //jTextAreaObservacao.setRows(5);
         //jScrollPane1.setViewportView(jTextAreaObservacao);
-        jButtonSalvar.setText("Salvar");
-        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditar.setText("Editar...");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSalvarActionPerformed(evt);
+                jButtonEditarActionPerformed(evt);
             }
         });
         //(4)
@@ -331,7 +337,7 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
             .addComponent(jTabbedPaneContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonSalvar)
+                .addComponent(jButtonEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addContainerGap(182, Short.MAX_VALUE))
         );
@@ -342,13 +348,13 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
                 .addComponent(jTabbedPaneContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jButtonSalvar))
+                .addComponent(jButtonEditar))
                 .addContainerGap())
         );
         pack();
     }
     
-    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
     	int i = jTabbedPaneContainer.getSelectedIndex();
      
     	if (jTabbedPaneContainer.getComponentCount() - 1 == i){
@@ -356,6 +362,6 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
     	}else{
     		jTabbedPaneContainer.setSelectedIndex(i+1);
     	}
-    }//GEN-LAST:event_jButtonSalvarActionPerformed
+    }//GEN-LAST:event_jButtonEditarActionPerformed
   	      
 }
