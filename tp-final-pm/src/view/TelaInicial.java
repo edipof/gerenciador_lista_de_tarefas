@@ -8,52 +8,105 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
+import model.Usuario;
+import control.AcaoTelaInicial;
+
 public class TelaInicial extends JFrame {
 	
-	private String listaUsuario[] = {"Fulano", "Ciclano", "Beltrano"};
+	AcaoTelaInicial tl = new AcaoTelaInicial();
+	JComboBox<String> listaUsuarios;
 	private JTextField novoUsuario;
-	private JList listaSelecionavel;
+	//private JList<Usuario> listaSelecionavel;
 	private JButton entrar;
 	
 	public TelaInicial() {
 		// TODO Stub de construtor gerado automaticamente
 		super("EFIFO - Gerenciador de Tarefas");
+		initComponents();
+	}
+	
+	
+	
+
+
+	private void buscaTodosUsuarios(){
 		
-		//Obtém painel de conteudo
+		ArrayList<Usuario> array = null;
+		try {
+			array = tl.buscarListaUsuarios();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}    
+	    
+        String str = null;    
+  
+        for (Usuario usuario : array) {
+        	System.out.println(usuario.getNome());
+            str = usuario.getNome();    
+            listaUsuarios.addItem(str);
+//            System.out.println(usuario.getNome());
+       }    
+	}
+	
+	
+	public void entrarActionPerformed(ActionEvent e) {
+		// TODO Stub de método gerado automaticamente
+		boolean dadosInseridos = false;
+		String nome = novoUsuario.getText();
+		if (nome.length() == 0){
+			JOptionPane.showMessageDialog(null, "Favor, entre com um nome de usuario!");
+		} else {
+			AcaoTelaInicial tl = new AcaoTelaInicial();
+			tl.adicionaNovoUsuario(nome);
+			dadosInseridos = true;
+		}
+		
+		if (dadosInseridos){
+			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nome + ", ao Sistema EFIFO - Gerenciador de Tarefas!");
+			new TelaVisualizacaoDeTarefas(nome).setVisible(true);
+		}
+	}
+	private void initComponents() {
+		
+		
+		Box caixa[] = new Box[3];
 		Container container = getContentPane();
+		JLabel mot = new JLabel("Entre com um Novo Usuario, ou selecione um pré-existente", SwingConstants.CENTER);
+		JPanel painelUsuario = new JPanel();
+		JLabel usuarioNovo = new JLabel("Usuário: ");		
+		
 		
 		//Configura o Layout com o BorderLayout
 		container.setLayout( new BorderLayout(30, 30));
-		
-		Box caixa[] = new Box[3];
-		
-		
+				
 		
 		caixa[0] = Box.createHorizontalBox();
 		caixa[1] = Box.createHorizontalBox();
-		caixa[2] = Box.createHorizontalBox();
-		
-		JLabel mot = new JLabel("Entre com um Novo Usuario, ou selecione um pré-existente", SwingConstants.CENTER);  
+		caixa[2] = Box.createHorizontalBox();  
 		
 		caixa[0].add(Box.createHorizontalStrut(20));
-		
 		caixa[0].add(mot);
 		
 		//Criando um leaiute relativo para os usuarios, tanto o novo quantos os pre-selecionados
-		
-		JPanel painelUsuario = new JPanel();
-		
-		
+				
 		novoUsuario = new JTextField(15);
-		JLabel usuarioNovo = new JLabel("Usuário: ");
+
 		//Configura o layout do painel na horizotal
 		painelUsuario.add(usuarioNovo);
 		painelUsuario.add(novoUsuario);
 
 		entrar = new JButton("Entrar");
+		entrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+                entrarActionPerformed(evt);
+            }
+        });
+		
 		painelUsuario.add(entrar);
 		caixa[1].add(Box.createHorizontalStrut(20));
 		caixa[1].add(painelUsuario);
@@ -63,12 +116,8 @@ public class TelaInicial extends JFrame {
 		
 		JPanel painelLista = new JPanel();
 		
-		listaSelecionavel = new JList(listaUsuario);
-		listaSelecionavel.setVisibleRowCount(5);
-		listaSelecionavel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listaSelecionavel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		listaSelecionavel.setFixedCellWidth(210);
-		painelLista.add(listaSelecionavel);
+		//buscaTodosUsuarios();
+		//painelLista.add(listaUsuarios);
 		caixa[2].add(Box.createHorizontalStrut(50));
 		caixa[2].add(painelLista);
 		
@@ -85,9 +134,8 @@ public class TelaInicial extends JFrame {
 		container.add(caixa[2], BorderLayout.SOUTH);
 		setVisible(true);
 		setSize(500, 250);
-		
+
 	}
-	
 	
 	/* Comenta Tudo 
 	public void exibirTela(){
