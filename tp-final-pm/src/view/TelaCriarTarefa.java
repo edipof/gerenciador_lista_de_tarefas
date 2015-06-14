@@ -275,6 +275,10 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
     		}
     		else{
+    			if (tp_data.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})") == false){
+    				JOptionPane.showMessageDialog(null, "A data deve estar no formato dd/mm/aaaa");
+    				return;
+            	}
     			AcaoCriaTarefa a = new AcaoCriaTarefa();
     			a.insereTarefaProgressiva(tp_titulo, tp_desc, tp_data, tp_progresso);
 	    		dados_inseridos = true;
@@ -290,6 +294,14 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
     		}
     		else{
+    			if (l_data.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})") == false){
+    				JOptionPane.showMessageDialog(null, "A data deve estar no formato dd/mm/aaaa");
+    				return;
+            	}
+    			else if (l_hora.matches("([0-9]{2}):([0-9]{2})") == false){
+    				JOptionPane.showMessageDialog(null, "A hora deve estar no formato HH:MM");
+    				return;
+            	}
     			AcaoCriaTarefa a = new AcaoCriaTarefa();
     			a.insereLembrete(l_titulo, l_desc, l_data, l_hora);
 				dados_inseridos = true;
@@ -298,11 +310,6 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     	if (dados_inseridos){
     		JOptionPane.showMessageDialog(null, "Tarefa salva com sucesso");
     	}
-    	/*if (jTabbedPaneContainer.getComponentCount() - 1 == i){
-           jTabbedPaneContainer.setSelectedIndex(0);
-    	}else{
-    		jTabbedPaneContainer.setSelectedIndex(i+1);
-    	}*/
     }//GEN-LAST:event_jButtonSalvarActionPerformed
   	      
 }
