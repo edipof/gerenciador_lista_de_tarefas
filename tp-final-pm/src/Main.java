@@ -1,6 +1,7 @@
 import view.TelaCriarTarefa;
 import view.TelaInicial;
 import view.TelaCriarTarefa;
+import view.TelaVisualizacaoDeTarefas;
 
 
 public class Main {
@@ -18,6 +19,11 @@ public class Main {
     			new TelaCriarTarefa().setVisible(true);
     		}
     	});
+		/*java.awt.EventQueue.invokeLater(new Runnable() {
+    		public void run() {
+    			new TelaVisualizacaoDeTarefas("Édipo").setVisible(true);
+    		}
+    	});*/
 		/**
 	     * @param args the command line arguments
 	    *//*

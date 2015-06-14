@@ -1,12 +1,14 @@
 package view;
 
-import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
+import control.AcaoCriaTarefa;
 import model.Lembrete;
 import model.TarefaProgressiva;
 import model.TarefaSimples;
 import model.Usuario;
+import model.dao.DAO;
 import model.dao.DaoLembrete;
 import model.dao.DaoTarefaProgressiva;
 import model.dao.DaoTarefaSimples;
@@ -252,13 +254,8 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
     		}
     		else{
-				DaoTarefaSimples dao_ts = new DaoTarefaSimples();
-				Usuario u = new Usuario();
-				u.setId(3);
-				u.setNome("Bruno");
-				TarefaSimples ts = new TarefaSimples(ts_titulo, ts_desc, u);
-				
-				dao_ts.insere(ts);
+    			AcaoCriaTarefa a = new AcaoCriaTarefa();
+    			a.insereTarefaSimples(ts_titulo, ts_desc);
 				dados_inseridos = true;
     		}
     	}
@@ -266,19 +263,20 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     		String tp_titulo = jTextFieldTPTitulo.getText();
         	String tp_desc = jTextAreaFieldTPDescricao.getText();
         	String tp_data = jTextFieldTPData.getText();
-        	Long tp_progresso = Long.parseLong(jTextFieldTPProgresso.getText());
-    		
+        	Long tp_progresso;
+        	try{
+        		tp_progresso = Long.parseLong(jTextFieldTPProgresso.getText());
+        	}
+        	catch (Exception e){
+        		JOptionPane.showMessageDialog(null, "O campo progresso deve possuir um inteiro");
+        		return;
+        	}
         	if (tp_titulo.length() == 0 || tp_desc.length() == 0 || tp_data.length() == 0){//Olhar tp_progresso
     			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
     		}
     		else{
-	    		DaoTarefaProgressiva dao_tp = new DaoTarefaProgressiva();
-	    		Usuario u = new Usuario();
-	    		u.setId(3);
-	    		u.setNome("Bruno");
-	    		TarefaProgressiva tp = new TarefaProgressiva(tp_titulo, tp_desc, u, tp_data, tp_progresso);
-	    		
-	    		dao_tp.insere(tp);
+    			AcaoCriaTarefa a = new AcaoCriaTarefa();
+    			a.insereTarefaProgressiva(tp_titulo, tp_desc, tp_data, tp_progresso);
 	    		dados_inseridos = true;
     		}
     	}
@@ -292,13 +290,8 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
     		}
     		else{
-				DaoLembrete dao_l = new DaoLembrete();
-				Usuario u = new Usuario();
-				u.setId(3);
-				u.setNome("Bruno");
-				Lembrete l = new Lembrete(l_titulo, l_desc, u, l_data, l_hora);
-				
-				dao_l.insere(l);
+    			AcaoCriaTarefa a = new AcaoCriaTarefa();
+    			a.insereLembrete(l_titulo, l_desc, l_data, l_hora);
 				dados_inseridos = true;
     		}
     	}

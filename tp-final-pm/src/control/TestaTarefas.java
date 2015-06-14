@@ -19,7 +19,17 @@ public class TestaTarefas {
 		DAO<TarefaSimples,Usuario> tarefaDTO = new DaoTarefaSimples();
 		DAO<Lembrete,Usuario> lembreteDTO = new DaoLembrete();
 		
+		
+		DaoTarefaSimples dao_ts = new DaoTarefaSimples();
+		Usuario u = new Usuario();
+		u.setId(3);
+		u.setNome("Bruno");
+		TarefaSimples ts = new TarefaSimples("ASDAS", "ASDASDASDAS", u);
+		dao_ts.insere(ts);
+		
+		
 		Usuario usuario1 = (Usuario) usuarioDTO.getLista().get(0);
+		System.out.println(usuario1.getNome());
 		Usuario usuario2 = (Usuario) usuarioDTO.getLista().get(1);
 		
 		//insere
