@@ -16,9 +16,14 @@ public class Main {
 		//TelaCriarTarefa app = new TelaCriarTarefa();
 		java.awt.EventQueue.invokeLater(new Runnable() {
     		public void run() {
-    			new TelaVisualizacaoDeTarefas("Édipo").setVisible(true);
+    			new TelaCriarTarefa().setVisible(true);
     		}
     	});
+		/*java.awt.EventQueue.invokeLater(new Runnable() {
+    		public void run() {
+    			new TelaVisualizacaoDeTarefas("Édipo").setVisible(true);
+    		}
+    	});*/
 		/**
 	     * @param args the command line arguments
 	    *//*
