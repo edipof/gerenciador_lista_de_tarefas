@@ -65,7 +65,6 @@ public class TelaInicial extends JFrame {
 		if (nome.length() == 0){
 			JOptionPane.showMessageDialog(null, "Favor, entre com um nome de usuario!");
 		} else {
-			AcaoTelaInicial tl = new AcaoTelaInicial();
 			tl.adicionaNovoUsuario(nome);
 			dadosInseridos = true;
 		}
@@ -78,7 +77,13 @@ public class TelaInicial extends JFrame {
 	
 	private void entrarUsuarioExistenteActionPerformed(ActionEvent evt) {
 		// TODO Stub de método gerado automaticamente
-		
+		String nomeUsuario = jComboBoxListaUsuarios.getSelectedItem().toString();
+		if (nomeUsuario.length() == 0){
+			JOptionPane.showMessageDialog(null, "Favor, Selecione um Usuário!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nomeUsuario + ", ao Sistema EFIFO - Gerenciador de Tarefas!");
+			new TelaVisualizacaoDeTarefas(nomeUsuario).setVisible(true);
+		}
 	}
 	
 	
