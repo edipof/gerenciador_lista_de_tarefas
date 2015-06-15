@@ -35,22 +35,21 @@ public class TelaInicial extends JFrame {
 
 
 	private void buscaTodosUsuarios(){
-		
+		 
 		ArrayList<Usuario> array = null;
+		String item = null;
 		try {
 			array = tl.buscarListaUsuarios();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}    
-	    
-        String str = null;    
-  
+		}        
+        
         for (Usuario usuario : array) {
-        	System.out.println(usuario.getNome());
-            str = usuario.getNome();    
-            listaUsuarios.addItem(str);
+        //	System.out.println(usuario.getNome());
+            item = usuario.getNome();    
+            listaUsuarios.addItem(item);
 //            System.out.println(usuario.getNome());
-       }    
+        }    
 	}
 	
 	
@@ -115,9 +114,9 @@ public class TelaInicial extends JFrame {
 		//Lista de Usuarios
 		
 		JPanel painelLista = new JPanel();
-		
-		//buscaTodosUsuarios();
-		//painelLista.add(listaUsuarios);
+		listaUsuarios = new JComboBox<String>();
+		buscaTodosUsuarios();
+		painelLista.add(listaUsuarios);
 		caixa[2].add(Box.createHorizontalStrut(50));
 		caixa[2].add(painelLista);
 		
