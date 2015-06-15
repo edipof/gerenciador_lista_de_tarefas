@@ -143,8 +143,6 @@ public class TelaEdicaoDeTarefas extends javax.swing.JFrame {
 //			System.out.println(dadosFormulario.get(0));
 			if (Long.toString(tarefa.getId()).equals(idTarefa)) {
 				
-				
-				
 				AcaoEditaTarefa a = new AcaoEditaTarefa();
 				a.atualizaTarefa(tarefa, dadosFormulario);
 				

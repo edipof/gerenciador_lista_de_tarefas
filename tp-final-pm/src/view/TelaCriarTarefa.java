@@ -100,7 +100,6 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
         jLabelLData.setText("Data");
         jLabelLHora.setText("Hora");
         
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Criar Tarefa");
         jTextAreaFieldTSDescricao.setColumns(20);
         jTextAreaFieldTSDescricao.setRows(5);
