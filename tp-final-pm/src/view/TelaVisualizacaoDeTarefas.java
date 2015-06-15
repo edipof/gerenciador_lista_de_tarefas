@@ -25,7 +25,7 @@ import model.dao.DaoUsuario;
 
 public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 	
-	private javax.swing.JButton jButtonMothafocka;
+	private javax.swing.JButton jButtonEditar;
 	private javax.swing.JTabbedPane jTabbedPaneContainer;
 	
 	public int buscaUsuario (String nomeUsuario) {
@@ -136,7 +136,7 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 
 
 		// Create and set up the window.
-		final JFrame frame = new JFrame("Split Pane Example");
+		final JFrame frame = new JFrame("Minhas tarefas");
 
 		// Display the window.
 		frame.setSize(1000, 300);
@@ -152,18 +152,18 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		
 		//configurando o botao de editar
 		
-		jButtonMothafocka = new javax.swing.JButton();
-		jButtonMothafocka.setText("Editar...");
-		jButtonMothafocka.addActionListener(new ActionListener() { 
+		jButtonEditar = new javax.swing.JButton();
+		jButtonEditar.setText("Editar...");
+		jButtonEditar.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				metodoClicarBotaoMothafocka(jTabbedPaneContainer);
+				metodoAcaoClicarBotaoEditar(jTabbedPaneContainer);
 			} 
         });
 		JPanel botao = new JPanel();
 	    BoxLayout layoutBotao = new BoxLayout(botao, BoxLayout.LINE_AXIS);
 	    botao.setLayout(layoutBotao);
-	    botao.add(jButtonMothafocka);
+	    botao.add(jButtonEditar);
 	    JPanel p = new JPanel(new BorderLayout());
 	    p.add(botao, BorderLayout.PAGE_END);
 
@@ -173,11 +173,12 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		frame.add(botao, BorderLayout.PAGE_END);
     }
     
-    void metodoClicarBotaoMothafocka (JTabbedPane jTabbedPaneContainer) {
+    void metodoAcaoClicarBotaoEditar (JTabbedPane jTabbedPaneContainer) {
 		
     	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
     	
     	System.out.println("aba:" + abaAtual);
+    	
 //    	Component aba = jTabbedPaneContainer.getComponentAt(abaAtual).getName();
     	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
 //    	System.out.println(aba);
@@ -185,10 +186,26 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
     	Object idElementoNoBanco = (Object) tabela.getModel().getValueAt(tabela.getSelectedRow(), 0);
     	System.out.println("id da tarefa no banco:" + idElementoNoBanco.toString());
 //    	System.out.println(jTabbedPaneContainer.getTabComponentAt(abaAtual).getName());
-    	System.out.println("-----------");
+    	System.out.println("---------------------------------------------------");
     	
+    	final ArrayList<String> nomesColunas = new ArrayList<String>();
+    	final ArrayList<String> conteudoColunas = new ArrayList<String>();
+    	
+    	for (int i = 0; i < tabela.getColumnCount(); i++) {
+    		
+    		nomesColunas.add(tabela.getModel().getColumnName(i));
+    		conteudoColunas.add(tabela.getModel().getValueAt(tabela.getSelectedRow(), i).toString());
+    		
+    	}
+    	
+    	System.out.println(nomesColunas.toString());
+    	System.out.println(conteudoColunas.toString());
+    	
+    	java.awt.EventQueue.invokeLater(new Runnable() {
+    		public void run() {
+    			new TelaEdicaoDeTarefas(nomesColunas, conteudoColunas);
+    		}
+    	});    	
 	}
-
-
 
 }
