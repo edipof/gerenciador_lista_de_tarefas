@@ -1,8 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -17,6 +14,8 @@ import control.AcaoTelaInicial;
 
 public class TelaInicial extends JFrame {
 	
+	private static final long serialVersionUID = 5222388480306127381L;
+
 	AcaoTelaInicial tl = new AcaoTelaInicial();
 	
 	private JTextField jTextFieldNovoUsuario; 
@@ -32,10 +31,11 @@ public class TelaInicial extends JFrame {
 	
 	private JButton jButtonEntrarNovoUsuario;
 	private JButton jButtonEntrarUsuarioExistente;	
+	private JButton jButtonRemoveUsuario;
 	
 	public TelaInicial() {
-		// TODO Stub de construtor gerado automaticamente
-		super("EFIFO - Gerenciador de Tarefas");
+		
+		super("ÉFIFOTaskManager");
 		initComponents();
 	}
 	
@@ -50,16 +50,14 @@ public class TelaInicial extends JFrame {
 		}        
         
         for (Usuario usuario : array) {
-        //	System.out.println(usuario.getNome());
             item = usuario.getNome();    
             jComboBoxListaUsuarios.addItem(item);
-//            System.out.println(usuario.getNome());
         }    
 	}
 	
 	
 	public void entrarNovoUsuarioActionPerformed(ActionEvent e) {
-		// TODO Stub de método gerado automaticamente
+		
 		boolean dadosInseridos = false;
 		String nome = jTextFieldNovoUsuario.getText();
 		if (nome.length() == 0){
@@ -70,22 +68,34 @@ public class TelaInicial extends JFrame {
 		}
 		
 		if (dadosInseridos){
-			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nome + ", ao Sistema EFIFO - Gerenciador de Tarefas!");
+			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nome + ", ao Sistema ÉFIFOTaskManager!");
 			new TelaVisualizacaoDeTarefas(nome).setVisible(true);
 		}
 	}
 	
 	private void entrarUsuarioExistenteActionPerformed(ActionEvent evt) {
-		// TODO Stub de método gerado automaticamente
+		
 		String nomeUsuario = jComboBoxListaUsuarios.getSelectedItem().toString();
 		if (nomeUsuario.length() == 0){
 			JOptionPane.showMessageDialog(null, "Favor, Selecione um Usuário!");
 		} else {
-			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nomeUsuario + ", ao Sistema EFIFO - Gerenciador de Tarefas!");
+			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nomeUsuario + ", ao Sistema ÉFIFOTaskManager!");
 			new TelaVisualizacaoDeTarefas(nomeUsuario).setVisible(true);
+			this.dispose();
 		}
 	}
 	
+	private void removerUsuarioExistenteActionPerformed(ActionEvent e) {
+		String nomeUsuario = jComboBoxListaUsuarios.getSelectedItem().toString();
+		Usuario usuarioExcluido = tl.buscaUmUsuario(nomeUsuario);
+		if (usuarioExcluido == null){
+			JOptionPane.showMessageDialog(null, "Usuário Inexistente!!");
+		} else {
+			tl.removeUsuario(usuarioExcluido);
+			JOptionPane.showMessageDialog(null, "Usuario Excluido com Sucesso");
+
+		}
+	}
 	
 	private void initComponents(){
 		
@@ -127,9 +137,15 @@ public class TelaInicial extends JFrame {
                 entrarUsuarioExistenteActionPerformed(evt);
             }
         });
+		jButtonRemoveUsuario = new JButton("Remover");
+		jButtonRemoveUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removerUsuarioExistenteActionPerformed(e);
+			}
+		});
 		jPanelSelecionaUsuario.add(jComboBoxListaUsuarios);
 		jPanelSelecionaUsuario.add(jButtonEntrarUsuarioExistente);
-		
+		jPanelSelecionaUsuario.add(jButtonRemoveUsuario);
 		add(jLabelCabecalhoNovoUsuario);
 		add(jPanelUsuario);
 		add(jLabelCabecalhoSelecionaUsuario);
