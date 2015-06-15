@@ -1,20 +1,29 @@
 package control;
 
 import view.TelaAlarme;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
 import model.dao.DaoLembrete;
 import model.Lembrete;
+
 import java.util.ArrayList;
+
 import view.TelaAlarme;
+import model.operacoesBD.ManipuladorTarefaLembrete;
+import model.Usuario;
+
 
 public class Alarme implements Runnable{
-	ArrayList<Lembrete> lembretes = new ArrayList<Lembrete>();
+	ArrayList<Lembrete> lembretes;
+	Usuario usuario;
 	
-	public Alarme(){
-		Thread a = new Thread(new Alarme());
-		a.run();
+	public Alarme(Usuario usuario){
+		this.usuario = usuario;
 	}
 	
 	public Date getDataHoraAtual(){
@@ -23,24 +32,38 @@ public class Alarme implements Runnable{
 	}
 	
 	private void getLembretes(){
-		DaoLembrete l = new DaoLembrete();
-		this.lembretes = l.getLista();
+		ManipuladorTarefaLembrete l = new ManipuladorTarefaLembrete();
+		this.lembretes = l.selectListaEntidadeComParametro(this.usuario);
 	}
 	
 	@Override
 	public void run(){
-		Date data_hora;
 		String data_atual;
 		String hora_atual;
+		String data_formato = "dd/MM/yyyy";
+		String hora_formato = "HH:mm";
 		while(true){
 			getLembretes();
-			data_hora = getDataHoraAtual();
-			data_atual = data_hora.toString();//Tem que pegar a data sozinha e a hora sozinha ainda
-			hora_atual = data_hora.toString();//Tem que pegar a data sozinha e a hora sozinha ainda
-			for (Lembrete l: this.lembretes){
-				if (l.getData() == data_atual  && l.getHora() == hora_atual){
-					TelaAlarme ta = new TelaAlarme(l);
+			
+			//Pegando a data e hora do sistema
+			java.util.Date agora = new java.util.Date();;
+			SimpleDateFormat formata = new SimpleDateFormat(data_formato);
+			data_atual = formata.format(agora);
+			formata = new SimpleDateFormat(hora_formato);
+			hora_atual = formata.format(agora);
+			//--------------
+			if (!this.lembretes.isEmpty()){
+				for (Lembrete l: this.lembretes){
+					if (l.getData().equals(data_atual)  && l.getHora().equals(hora_atual)){
+						TelaAlarme ta = new TelaAlarme(l);
+					}
 				}
+			}
+			try {
+				Thread.sleep(59000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
