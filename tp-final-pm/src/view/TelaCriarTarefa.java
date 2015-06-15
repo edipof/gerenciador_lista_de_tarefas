@@ -46,11 +46,11 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
 	private javax.swing.JTextField jTextFieldLData;
 	private javax.swing.JTextField jTextFieldLHora;
    
-    public TelaCriarTarefa() {
-        initComponents();
+    public TelaCriarTarefa(Usuario u) {
+        initComponents(u);
     }
   
-    private void initComponents() {
+    private void initComponents(final Usuario u) {
     	//(1)
     	jTabbedPaneContainer = new javax.swing.JTabbedPane();
     	jPanelTarefaSimples = new javax.swing.JPanel();
@@ -115,7 +115,7 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
         jButtonSalvar.setText("Salvar");
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSalvarActionPerformed(evt);
+                jButtonSalvarActionPerformed(evt, u);
             }
         });
         //(4)
@@ -242,7 +242,7 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
         pack();
     }
     
-    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt, Usuario u) {//GEN-FIRST:event_jButtonSalvarActionPerformed
     	int i = jTabbedPaneContainer.getSelectedIndex();
     	Boolean dados_inseridos = false;
 
@@ -254,7 +254,7 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
     		}
     		else{
-    			AcaoCriaTarefa a = new AcaoCriaTarefa();
+    			AcaoCriaTarefa a = new AcaoCriaTarefa(u);
     			a.insereTarefaSimples(ts_titulo, ts_desc);
 				dados_inseridos = true;
     		}
@@ -279,7 +279,7 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     				JOptionPane.showMessageDialog(null, "A data deve estar no formato dd/mm/aaaa");
     				return;
             	}
-    			AcaoCriaTarefa a = new AcaoCriaTarefa();
+    			AcaoCriaTarefa a = new AcaoCriaTarefa(u);
     			a.insereTarefaProgressiva(tp_titulo, tp_desc, tp_data, tp_progresso);
 	    		dados_inseridos = true;
     		}
@@ -302,13 +302,15 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     				JOptionPane.showMessageDialog(null, "A hora deve estar no formato HH:MM");
     				return;
             	}
-    			AcaoCriaTarefa a = new AcaoCriaTarefa();
+    			AcaoCriaTarefa a = new AcaoCriaTarefa(u);
     			a.insereLembrete(l_titulo, l_desc, l_data, l_hora);
 				dados_inseridos = true;
     		}
     	}
     	if (dados_inseridos){
     		JOptionPane.showMessageDialog(null, "Tarefa salva com sucesso");
+    		this.dispose();
+    		new TelaVisualizacaoDeTarefas(u.getNome());
     	}
     }//GEN-LAST:event_jButtonSalvarActionPerformed
   	      

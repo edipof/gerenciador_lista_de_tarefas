@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -16,16 +15,19 @@ import javax.swing.table.DefaultTableModel;
 
 import model.Lembrete;
 import model.Tarefa;
+import model.TarefaProgressiva;
 import model.TarefaSimples;
 import model.Usuario;
 import model.dao.DAO;
 import model.dao.DaoLembrete;
+import model.dao.DaoTarefaProgressiva;
 import model.dao.DaoTarefaSimples;
 import model.dao.DaoUsuario;
 
 public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 	
 	private javax.swing.JButton jButtonEditar;
+	private javax.swing.JButton jButtonCriar;
 	private javax.swing.JTabbedPane jTabbedPaneContainer;
 	
 	public int buscaUsuario (String nomeUsuario) {
@@ -46,25 +48,23 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		return indiceUsuarioEncontrado;
 	}
 	
-	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasSimples(String nomeUsuario) {
+	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasSimples(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
 		
-		DAO<Usuario,Tarefa> usuarioDTO = new DaoUsuario();
 		DAO<TarefaSimples,Usuario> tarefaDTO = new DaoTarefaSimples();
-		int indiceUsuarioEncontrado = buscaUsuario(nomeUsuario);
 		
-		
-		Usuario usuario = (Usuario) usuarioDTO.getLista().get(indiceUsuarioEncontrado);
-		ArrayList<TarefaSimples> listaTarefaSimples = new ArrayList<TarefaSimples>();
-		listaTarefaSimples = tarefaDTO.getLista(usuario);
+		ArrayList<TarefaSimples>listaTarefasSimples = tarefaDTO.getLista(usuario);
 		
 		ArrayList<ArrayList<String>> tarefas = new ArrayList<ArrayList<String>>();
 		
-		for (TarefaSimples tarefa : listaTarefaSimples) {
+		for (TarefaSimples tarefa : listaTarefasSimples) {
+			
+			listaTarefasParaEditar.add(tarefa);
 			
 			ArrayList<String> listaAux= new ArrayList<String>();
 			
 			listaAux.add(Long.toString(tarefa.getId()) );
+			listaAux.add(tarefa.getTitulo() );
 			listaAux.add(tarefa.getDescricao() );
 			
 			tarefas.add(listaAux);
@@ -74,24 +74,25 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 
 	}
 	
-	public ArrayList<ArrayList<String>> obtemMatrizDeLembretes(String nomeUsuario){ /* throws alguma excecao que nao faco ideia qual eh*/
+	public ArrayList<ArrayList<String>> obtemMatrizDeLembretes(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar){ /* throws alguma excecao que nao faco ideia qual eh*/
 		
-		DAO<Usuario,Tarefa> usuarioDTO = new DaoUsuario();
+		
 		DAO<Lembrete,Usuario> lembreteDTO = new DaoLembrete();
-		int indiceUsuarioEncontrado = buscaUsuario(nomeUsuario);
 		
+
 		
-		Usuario usuario = (Usuario) usuarioDTO.getLista().get(indiceUsuarioEncontrado);
-		ArrayList<Lembrete> listaLembrete = new ArrayList<Lembrete>();
-		listaLembrete = lembreteDTO.getLista(usuario);
+		ArrayList<Lembrete> listaLembretes = lembreteDTO.getLista(usuario);
 		
 		ArrayList<ArrayList<String>> lembretes = new ArrayList<ArrayList<String>>();
 		
-		for (Lembrete lembrete : listaLembrete) {
+		for (Lembrete lembrete : listaLembretes) {
+			
+			listaTarefasParaEditar.add(lembrete);
 			
 			ArrayList<String> listaAux= new ArrayList<String>();
 			
 			listaAux.add(Long.toString(lembrete.getId()) );
+			listaAux.add(lembrete.getTitulo() );
 			listaAux.add(lembrete.getDescricao() );
 			listaAux.add(lembrete.getData() );
 			listaAux.add(lembrete.getHora());
@@ -102,7 +103,38 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		return lembretes;
 		
 	}
-   
+
+	
+	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasProgressivas(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar) {
+		
+		
+		DAO<TarefaProgressiva,Usuario> tarefaDTO = new DaoTarefaProgressiva();
+		
+		ArrayList<TarefaProgressiva> listaTarefasProgressiva = tarefaDTO.getLista(usuario);
+		
+		ArrayList<ArrayList<String>> tarefas = new ArrayList<ArrayList<String>>();
+		
+		for (TarefaProgressiva tarefa : listaTarefasProgressiva) {
+			
+			listaTarefasParaEditar.add(tarefa);
+			
+			ArrayList<String> listaAux= new ArrayList<String>();
+			
+			listaAux.add(Long.toString(tarefa.getId()) );
+			listaAux.add(tarefa.getTitulo() );
+			listaAux.add(tarefa.getDescricao() );
+			listaAux.add(tarefa.getData() );
+			listaAux.add(Long.toString(tarefa.getProgresso()) );
+			
+			tarefas.add(listaAux);
+		}
+		
+		return tarefas;
+
+	}
+	
+
+	
     public TelaVisualizacaoDeTarefas(String nomeUsuario) {
         geraVisualizacao(nomeUsuario);
     }
@@ -126,14 +158,26 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
     	return tabela;
     }
     
-    private void geraVisualizacao(String nomeUsuario) {
+    private void geraVisualizacao(final String nomeUsuario) {
+    	
+    	final ArrayList<Tarefa> listaTarefasParaEditar = new ArrayList<Tarefa>();
+    	
+		DAO<Usuario,Tarefa> usuarioDTO = new DaoUsuario();
+		int indiceUsuarioEncontrado = buscaUsuario(nomeUsuario);
+		final Usuario usuario = (Usuario) usuarioDTO.getLista().get(indiceUsuarioEncontrado);
 
-    	String[] colunasLembretes = {"Id", "Descricao", "Data", "Hora"};
-	    JTable lembretes = converteMatrizParaJTable(obtemMatrizDeLembretes(nomeUsuario), colunasLembretes); 
+    	
+    	String[] colunasLembretes = {"Id", "Títutlo", "Descricao", "Data", "Hora"};
+	    JTable lembretes = converteMatrizParaJTable(obtemMatrizDeLembretes(usuario, listaTarefasParaEditar), colunasLembretes); 
+	    lembretes.setName("Lembretes");
 	    
-	    String[] colunasTarefasSimples = {"Id", "Descricao"};
-	    JTable tarefasSimples = converteMatrizParaJTable(obtemMatrizDeTarefasSimples(nomeUsuario), colunasTarefasSimples);
-
+	    String[] colunasTarefasSimples = {"Id", "Título", "Descricao"};
+	    JTable tarefasSimples = converteMatrizParaJTable(obtemMatrizDeTarefasSimples(usuario, listaTarefasParaEditar), colunasTarefasSimples);
+	    tarefasSimples.setName("Tarefas Simples");
+	    
+	    String[] colunasTarefasProgressivas = {"Id", "Títutlo", "Descricao", "Data", "Progresso"};
+	    JTable tarefasProgressivas = converteMatrizParaJTable(obtemMatrizDeTarefasProgressivas(usuario, listaTarefasParaEditar), colunasTarefasProgressivas);
+	    tarefasProgressivas.setName("Tarefas Simples");
 
 		// Create and set up the window.
 		final JFrame frame = new JFrame("Minhas tarefas");
@@ -144,9 +188,10 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		final JTabbedPane jTabbedPaneContainer = new JTabbedPane();
-
+		
 		jTabbedPaneContainer.addTab("Lembretes", lembretes);
 		jTabbedPaneContainer.addTab("Tarefas simples", tarefasSimples);
+		jTabbedPaneContainer.addTab("Tarefas progressivas", tarefasProgressivas);
 
 		frame.getContentPane().add(jTabbedPaneContainer);
 		
@@ -157,13 +202,26 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		jButtonEditar.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				metodoAcaoClicarBotaoEditar(jTabbedPaneContainer);
+				metodoAcaoClicarBotaoEditar(jTabbedPaneContainer, listaTarefasParaEditar, frame, usuario);
 			} 
         });
+		
+		//configurando o botao de criar nova
+		jButtonCriar = new javax.swing.JButton();
+		jButtonCriar.setText("Criar");
+		jButtonCriar.addActionListener(new ActionListener() { 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				metodoAcaoClicarBotaoCriar(frame, usuario);
+			} 
+        });
+		
 		JPanel botao = new JPanel();
 	    BoxLayout layoutBotao = new BoxLayout(botao, BoxLayout.LINE_AXIS);
 	    botao.setLayout(layoutBotao);
 	    botao.add(jButtonEditar);
+	    botao.add(jButtonCriar);
+	    
 	    JPanel p = new JPanel(new BorderLayout());
 	    p.add(botao, BorderLayout.PAGE_END);
 
@@ -173,7 +231,7 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		frame.add(botao, BorderLayout.PAGE_END);
     }
     
-    void metodoAcaoClicarBotaoEditar (JTabbedPane jTabbedPaneContainer) {
+    void metodoAcaoClicarBotaoEditar (JTabbedPane jTabbedPaneContainer, final ArrayList<Tarefa> listaTarefasParaEditar, JFrame frame, final Usuario usuario) {
 		
     	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
     	
@@ -181,6 +239,8 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
     	
 //    	Component aba = jTabbedPaneContainer.getComponentAt(abaAtual).getName();
     	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
+    	final String tipoTarefa = tabela.getName();
+    	System.out.println("=============" + tipoTarefa + "=============");
 //    	System.out.println(aba);
     	System.out.println("linha:" + tabela.getSelectedRow());
     	Object idElementoNoBanco = (Object) tabela.getModel().getValueAt(tabela.getSelectedRow(), 0);
@@ -195,7 +255,6 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
     		
     		nomesColunas.add(tabela.getModel().getColumnName(i));
     		conteudoColunas.add(tabela.getModel().getValueAt(tabela.getSelectedRow(), i).toString());
-    		
     	}
     	
     	System.out.println(nomesColunas.toString());
@@ -203,9 +262,26 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
     	
     	java.awt.EventQueue.invokeLater(new Runnable() {
     		public void run() {
-    			new TelaEdicaoDeTarefas(nomesColunas, conteudoColunas);
+    			new TelaEdicaoDeTarefas(nomesColunas, conteudoColunas, listaTarefasParaEditar, usuario);
     		}
     	});    	
+    	frame.dispose();
 	}
+    
+    void metodoAcaoClicarBotaoCriar (JFrame frame, final Usuario usuario) {
+		
+    	
+    	java.awt.EventQueue.invokeLater(new Runnable() {
+    		public void run() {
+    			java.awt.EventQueue.invokeLater(new Runnable() {
+    	    		public void run() {
+    	    			new TelaCriarTarefa(usuario).setVisible(true);;
+    	    		}
+    	    	});
+    		}
+    	});    	
+    	frame.dispose();
+	}
+
 
 }

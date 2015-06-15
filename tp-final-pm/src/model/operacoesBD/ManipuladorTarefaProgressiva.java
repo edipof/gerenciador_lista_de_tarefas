@@ -32,6 +32,7 @@ public class ManipuladorTarefaProgressiva extends ManipuladorBancoDados<TarefaPr
 			con = getConnection();
 			PreparedStatement prepared = con.prepareStatement(sql.getSELECT_TAREFA_PROGRESSIVA_POR_USUARIO());
 			prepared.setLong(1, usuario.getId());
+			prepared.setLong(2, usuario.getId());
 			ResultSet resultSet = prepared.executeQuery();
 			while(resultSet.next()){
 				titulo = resultSet.getString("TITULO");
