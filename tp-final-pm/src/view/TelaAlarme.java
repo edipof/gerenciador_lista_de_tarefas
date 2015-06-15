@@ -33,7 +33,6 @@ public class TelaAlarme extends JFrame{
 	private void prepararJanela() {
 		// TODO Stub de método gerado automaticamente
 		this.setTitle("ALARME - Gerenciador de Tarefas");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 
