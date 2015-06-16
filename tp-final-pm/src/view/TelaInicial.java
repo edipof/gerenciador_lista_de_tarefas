@@ -11,6 +11,7 @@ import javax.swing.*;
 
 import model.Usuario;
 import control.AcaoTelaInicial;
+import control.Alarme;
 
 public class TelaInicial extends JFrame {
 	
@@ -69,7 +70,10 @@ public class TelaInicial extends JFrame {
 		
 		if (dadosInseridos){
 			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nomeUsuario + ", ao Sistema ÉFIFOTaskManager!");
-			new TelaVisualizacaoDeTarefas(nomeUsuario);
+			Usuario usuario = tl.buscaUmUsuario(nomeUsuario);
+			Thread alarme = new Thread(new Alarme(usuario));
+			alarme.start();
+			new TelaVisualizacaoDeTarefas(usuario);
 		}
 	}
 	
@@ -80,7 +84,10 @@ public class TelaInicial extends JFrame {
 			JOptionPane.showMessageDialog(null, "Favor, Selecione um Usuário!");
 		} else {
 			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nomeUsuario + ", ao Sistema ÉFIFOTaskManager!");
-			new TelaVisualizacaoDeTarefas(nomeUsuario);
+			Usuario usuario = tl.buscaUmUsuario(nomeUsuario);
+			Thread alarme = new Thread(new Alarme(usuario));
+			alarme.start();
+			new TelaVisualizacaoDeTarefas(usuario);
 			this.dispose();
 		}
 	}

@@ -15,8 +15,6 @@ public class AcaoEditaTarefa {
 	
 	public void atualizaTarefa(Tarefa tarefa, ArrayList<String> dadosFormulario) {
 		
-		String msgErro = "";
-		
 		if (tarefa instanceof TarefaSimples) {
 			
 			TarefaSimples tarefaSimples = (TarefaSimples) tarefa;

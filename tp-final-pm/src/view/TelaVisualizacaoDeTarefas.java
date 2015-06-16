@@ -30,23 +30,6 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 	private javax.swing.JButton jButtonCriar;
 	private javax.swing.JTabbedPane jTabbedPaneContainer;
 	
-	public int buscaUsuario (String nomeUsuario) {
-		
-		DAO<Usuario,Tarefa> usuarioDTO = new DaoUsuario();
-		
-		int indiceUsuarioEncontrado = -1;
-		
-		// procura pelo nome de usuario passado como parametro vindo da tela que chama esta classe
-		for (int i = 0; i < usuarioDTO.getLista().size(); i++) {
-			 
-			if (usuarioDTO.getLista().get(i).getNome().equals(nomeUsuario)){ 
-				//pode usar if nesse caso ou o que?
-				indiceUsuarioEncontrado = i;
-			}
-		}//tem que lancar excecao se usuarioEncontrado ainda for -1? 
-		
-		return indiceUsuarioEncontrado;
-	}
 	
 	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasSimples(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
@@ -104,7 +87,6 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		
 	}
 
-	
 	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasProgressivas(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
 		
@@ -133,10 +115,8 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 
 	}
 	
-
-	
-    public TelaVisualizacaoDeTarefas(String nomeUsuario) {
-        geraVisualizacao(nomeUsuario);
+    public TelaVisualizacaoDeTarefas(Usuario usuario) {
+        geraVisualizacao(usuario);
     }
     
     public JTable converteMatrizParaJTable (ArrayList<ArrayList<String>> matriz, String[] colunas) {
@@ -158,14 +138,9 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
     	return tabela;
     }
     
-    private void geraVisualizacao(final String nomeUsuario) {
+    private void geraVisualizacao(final Usuario usuario) {
     	
     	final ArrayList<Tarefa> listaTarefasParaEditar = new ArrayList<Tarefa>();
-    	
-		DAO<Usuario,Tarefa> usuarioDTO = new DaoUsuario();
-		int indiceUsuarioEncontrado = buscaUsuario(nomeUsuario);
-		final Usuario usuario = (Usuario) usuarioDTO.getLista().get(indiceUsuarioEncontrado);
-
     	
     	String[] colunasLembretes = {"Id", "Títutlo", "Descricao", "Data", "Hora"};
 	    JTable lembretes = converteMatrizParaJTable(obtemMatrizDeLembretes(usuario, listaTarefasParaEditar), colunasLembretes); 

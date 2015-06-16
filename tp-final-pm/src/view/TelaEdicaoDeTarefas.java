@@ -32,7 +32,7 @@ public class TelaEdicaoDeTarefas extends javax.swing.JFrame {
     
     private void geraVisualizacao(ArrayList<String> nomesColunas,ArrayList<String> conteudoColunas, final ArrayList<Tarefa> listaTarefasParaEditar, final Usuario usuario) {
     	
-        final JFrame frame = new JFrame("Text Accelerator Example");
+        final JFrame frame = new JFrame("Editar tarefa");
         final Container painel = frame.getContentPane();
         painel.setLayout(new GridBagLayout());
         painel.setBackground(UIManager.getColor("control"));

@@ -309,7 +309,7 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     	if (dados_inseridos){
     		JOptionPane.showMessageDialog(null, "Tarefa salva com sucesso");
     		this.dispose();
-    		new TelaVisualizacaoDeTarefas(u.getNome());
+    		new TelaVisualizacaoDeTarefas(u);
     	}
     }//GEN-LAST:event_jButtonSalvarActionPerformed
   	      
