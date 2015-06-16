@@ -31,7 +31,7 @@ import model.operacoesBD.ManipuladorTarefaLembrete;
 import model.operacoesBD.ManipuladorTarefaProgressiva;
 import model.operacoesBD.ManipuladorTarefaSimples;
 
-public class TelaEdicaoDeTarefas  {
+public class TelaEdicaoDeTarefas extends Tela {
 	
     public TelaEdicaoDeTarefas(ArrayList<String> nomesColunas,ArrayList<String> conteudoColunas, ArrayList<Tarefa> listaTarefasParaEditar, Usuario usuario) {
         geraVisualizacao(nomesColunas, conteudoColunas, listaTarefasParaEditar, usuario);
@@ -146,16 +146,16 @@ public class TelaEdicaoDeTarefas  {
     	
     	String idTarefa = dadosFormulario.remove(0);
     	
-    	for (Tarefa tarefa : listaTarefasParaEditar) {
-//			System.out.println(dadosFormulario.get(0));
-			if (Long.toString(tarefa.getId()).equals(idTarefa)) {
-				
-				AcaoEditaTarefa a = new AcaoEditaTarefa();
-				a.atualizaTarefa(tarefa, dadosFormulario);
-				
-				JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
-			}
-    	}
+    	Tarefa tarefa = buscaTarefaPorId(listaTarefasParaEditar, idTarefa);
+    	
+    	if (tarefa != null) {
+        	
+        	AcaoEditaTarefa a = new AcaoEditaTarefa();
+    		a.atualizaTarefa(tarefa, dadosFormulario);
+    		
+    		/*depois da validacao: */ JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
+		}
+		
     }
     public Boolean isValido(Tarefa tarefa, ArrayList<String> dadosFormulario){
 		Boolean isValido = false;

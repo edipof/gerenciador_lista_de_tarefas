@@ -28,6 +28,7 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 	
 	private javax.swing.JButton jButtonEditar;
 	private javax.swing.JButton jButtonCriar;
+	private javax.swing.JButton jButtonRemover;
 	private javax.swing.JTabbedPane jTabbedPaneContainer;
 	
 	
@@ -180,14 +181,24 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 				metodoAcaoClicarBotaoEditar(jTabbedPaneContainer, listaTarefasParaEditar, frame, usuario);
 			} 
         });
-		
-		//configurando o botao de criar nova
+
+		//configurando o botao de criar nova tarefa
 		jButtonCriar = new javax.swing.JButton();
 		jButtonCriar.setText("Criar");
 		jButtonCriar.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				metodoAcaoClicarBotaoCriar(frame, usuario);
+			} 
+        });
+		
+		//configurando o botao de remover tarefa
+		jButtonRemover = new javax.swing.JButton();
+		jButtonRemover.setText("Remover");
+		jButtonRemover.addActionListener(new ActionListener() { 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				metodoAcaoClicarBotaoRemover(frame, listaTarefasParaEditar);
 			} 
         });
 		
@@ -205,6 +216,41 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 	    frame.add(jTabbedPaneContainer);
 		frame.add(botao, BorderLayout.PAGE_END);
     }
+
+    
+    void metodoAcaoClicarBotaoRemover (JFrame frame, ArrayList<Tarefa> listaTarefasParaEditar) {
+		
+    	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
+    	
+    	System.out.println("aba:" + abaAtual);
+    	
+//    	Component aba = jTabbedPaneContainer.getComponentAt(abaAtual).getName();
+    	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
+    	final String tipoTarefa = tabela.getName();
+    	System.out.println("=============" + tipoTarefa + "=============");
+//    	System.out.println(aba);
+    	System.out.println("linha:" + tabela.getSelectedRow());
+    	Object idElementoNoBanco = (Object) tabela.getModel().getValueAt(tabela.getSelectedRow(), 0);
+    	System.out.println("id da tarefa no banco:" + idElementoNoBanco.toString());
+//    	System.out.println(jTabbedPaneContainer.getTabComponentAt(abaAtual).getName());
+    	System.out.println("---------------------------------------------------");
+    	
+    	final ArrayList<String> nomesColunas = new ArrayList<String>();
+    	final ArrayList<String> conteudoColunas = new ArrayList<String>();
+    	
+    	for (int i = 0; i < tabela.getColumnCount(); i++) {
+    		
+    		nomesColunas.add(tabela.getModel().getColumnName(i));
+    		conteudoColunas.add(tabela.getModel().getValueAt(tabela.getSelectedRow(), i).toString());
+    	}
+    	
+    	System.out.println(nomesColunas.toString());
+    	System.out.println(conteudoColunas.toString());
+    	
+	}
+    
+
+    
     
     void metodoAcaoClicarBotaoEditar (JTabbedPane jTabbedPaneContainer, final ArrayList<Tarefa> listaTarefasParaEditar, JFrame frame, final Usuario usuario) {
 		
