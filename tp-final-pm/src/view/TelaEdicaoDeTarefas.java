@@ -21,10 +21,17 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import control.AcaoEditaTarefa;
+import model.Lembrete;
 import model.Tarefa;
+import model.TarefaProgressiva;
+import model.TarefaSimples;
 import model.Usuario;
+import model.operacoesBD.ManipuladorBancoDados;
+import model.operacoesBD.ManipuladorTarefaLembrete;
+import model.operacoesBD.ManipuladorTarefaProgressiva;
+import model.operacoesBD.ManipuladorTarefaSimples;
 
-public class TelaEdicaoDeTarefas extends javax.swing.JFrame {
+public class TelaEdicaoDeTarefas  {
 	
     public TelaEdicaoDeTarefas(ArrayList<String> nomesColunas,ArrayList<String> conteudoColunas, ArrayList<Tarefa> listaTarefasParaEditar, Usuario usuario) {
         geraVisualizacao(nomesColunas, conteudoColunas, listaTarefasParaEditar, usuario);
@@ -149,6 +156,18 @@ public class TelaEdicaoDeTarefas extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
 			}
     	}
+    }
+    public Boolean isValido(Tarefa tarefa, ArrayList<String> dadosFormulario){
+		Boolean isValido = false;
+    	if (tarefa instanceof TarefaSimples) {
+			return true;
+		} else if (tarefa instanceof TarefaProgressiva) {
+			
+		} else if (tarefa instanceof Lembrete) {
+			//verifica data e hora
+			//seta isValido true ou false
+		}
+    	return false;
     }
     
     public void metodoAcaoClicarBotaoFechar(JFrame frame, final Usuario usuario) {
