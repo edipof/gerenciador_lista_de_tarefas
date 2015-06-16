@@ -156,7 +156,7 @@ public class TelaEdicaoDeTarefas extends javax.swing.JFrame {
     	frame.dispose();
     	java.awt.EventQueue.invokeLater(new Runnable() {
     		public void run() {
-    			new TelaVisualizacaoDeTarefas(usuario.getNome());
+    			new TelaVisualizacaoDeTarefas(usuario);
     		}
     	});
 	}
