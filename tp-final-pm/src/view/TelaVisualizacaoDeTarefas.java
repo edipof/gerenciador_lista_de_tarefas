@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,9 +29,6 @@ import control.AcaoVisualizaTarefa;
 public class TelaVisualizacaoDeTarefas extends Tela {
 
 	private static final long serialVersionUID = 1L;
-	private javax.swing.JButton jButtonEditar;
-	private javax.swing.JButton jButtonCriar;
-	private javax.swing.JButton jButtonRemover;
 	private javax.swing.JTabbedPane jTabbedPaneContainer;
 	private AcaoVisualizaTarefa acaoVizualiza = new AcaoVisualizaTarefa();
 	
@@ -145,7 +143,6 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     	String[] colunasLembretes = {"Id", "Títutlo", "Descricao", "Data", "Hora"};
 	    JTable lembretes = converteMatrizParaJTable(obtemMatrizDeLembretes(usuario, listaTarefasParaEditar), colunasLembretes); 
 	    lembretes.setName("Lembretes");
-	    
 	    String[] colunasTarefasSimples = {"Id", "Título", "Descricao"};
 	    JTable tarefasSimples = converteMatrizParaJTable(obtemMatrizDeTarefasSimples(usuario, listaTarefasParaEditar), colunasTarefasSimples);
 	    tarefasSimples.setName("Tarefas Simples");
@@ -164,6 +161,12 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 
 		final JTabbedPane jTabbedPaneContainer = new JTabbedPane();
 		
+		JPanel j = new JPanel();
+		
+		j.add(lembretes.getTableHeader());
+		j.add(lembretes);
+		
+		
 		jTabbedPaneContainer.addTab("Lembretes", lembretes);
 		jTabbedPaneContainer.addTab("Tarefas simples", tarefasSimples);
 		jTabbedPaneContainer.addTab("Tarefas progressivas", tarefasProgressivas);
@@ -172,7 +175,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 		
 		//configurando o botao de editar
 		
-		jButtonEditar = new javax.swing.JButton();
+		JButton jButtonEditar = new javax.swing.JButton();
 		jButtonEditar.setText("Editar...");
 		jButtonEditar.addActionListener(new ActionListener() { 
 			@Override
@@ -182,7 +185,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
         });
 
 		//configurando o botao de criar nova tarefa
-		jButtonCriar = new javax.swing.JButton();
+		JButton jButtonCriar = new javax.swing.JButton();
 		jButtonCriar.setText("Criar");
 		jButtonCriar.addActionListener(new ActionListener() { 
 			@Override
@@ -192,12 +195,22 @@ public class TelaVisualizacaoDeTarefas extends Tela {
         });
 		
 		//configurando o botao de remover tarefa
-		jButtonRemover = new javax.swing.JButton();
+		JButton jButtonRemover = new javax.swing.JButton();
 		jButtonRemover.setText("Remover");
 		jButtonRemover.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				metodoAcaoClicarBotaoRemover(jTabbedPaneContainer, frame, listaTarefasParaEditar, usuario);
+			} 
+        });
+		
+		//configurando o botao de remover tarefa
+		JButton jButtonSair = new javax.swing.JButton();
+		jButtonSair.setText("Sair");
+		jButtonSair.addActionListener(new ActionListener() { 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				metodoAcaoClicarBotaoSair(frame);
 			} 
         });
 		
@@ -207,6 +220,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 	    botoes.add(jButtonEditar);
 	    botoes.add(jButtonCriar);
 	    botoes.add(jButtonRemover);
+	    botoes.add(jButtonSair);
 	    
 	    JPanel p = new JPanel(new BorderLayout());
 	    p.add(botoes, BorderLayout.PAGE_END);
@@ -240,25 +254,33 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 	}
     
     void metodoAcaoClicarBotaoEditar (JTabbedPane jTabbedPaneContainer, final ArrayList<Tarefa> listaTarefasParaEditar, JFrame frame, final Usuario usuario) {
+    	
+    	try {
+        	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
+        	
+        	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
+        	
+        	final ArrayList<String> nomesColunas = new ArrayList<String>();
+        	final ArrayList<String> conteudoColunas = new ArrayList<String>();
+        	
+        	for (int i = 0; i < tabela.getColumnCount(); i++) {
+        		
+        		nomesColunas.add(tabela.getModel().getColumnName(i));
+        		conteudoColunas.add(tabela.getModel().getValueAt(tabela.getSelectedRow(), i).toString());
+        	}
+        	java.awt.EventQueue.invokeLater(new Runnable() {
+        		public void run() {
+        			new TelaEdicaoDeTarefas(nomesColunas, conteudoColunas, listaTarefasParaEditar, usuario);
+        		}
+        	});    	
+        	frame.dispose();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
+			frame.dispose();
+			new TelaVisualizacaoDeTarefas(usuario);
+		}
 		
-    	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
-    	
-    	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
-    	
-    	final ArrayList<String> nomesColunas = new ArrayList<String>();
-    	final ArrayList<String> conteudoColunas = new ArrayList<String>();
-    	
-    	for (int i = 0; i < tabela.getColumnCount(); i++) {
-    		
-    		nomesColunas.add(tabela.getModel().getColumnName(i));
-    		conteudoColunas.add(tabela.getModel().getValueAt(tabela.getSelectedRow(), i).toString());
-    	}
-    	java.awt.EventQueue.invokeLater(new Runnable() {
-    		public void run() {
-    			new TelaEdicaoDeTarefas(nomesColunas, conteudoColunas, listaTarefasParaEditar, usuario);
-    		}
-    	});    	
-    	frame.dispose();
+
 	}
     
     void metodoAcaoClicarBotaoCriar (JFrame frame, final Usuario usuario) {
@@ -275,6 +297,15 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     	frame.dispose();
 	}
 
+    
+    void metodoAcaoClicarBotaoSair (JFrame frame) {
+    	
+    	frame.dispose();
+    	new TelaInicial();
+	}
+
+
+    
 	public javax.swing.JTabbedPane getjTabbedPaneContainer() {
 		return jTabbedPaneContainer;
 	}
