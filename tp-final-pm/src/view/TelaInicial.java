@@ -40,8 +40,8 @@ public class TelaInicial extends Tela {
 	
 	private void buscaTodosUsuarios(){
 		 
-		ArrayList<Usuario> array = null;
-		String item = null;
+		ArrayList<Usuario> array = new ArrayList<Usuario>();
+		String item = "";
 		try {
 			array = tl.buscarListaUsuarios();
 		} catch (SQLException e) {
@@ -67,29 +67,28 @@ public class TelaInicial extends Tela {
 		}
 		
 		if (dadosInseridos){
-			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nomeUsuario + ", ao Sistema ÉFIFOTaskManager!");
-			Usuario usuario = tl.buscaUmUsuario(nomeUsuario);
-			Thread alarme = new Thread(new Alarme(usuario));
-			alarme.start();
-			new TelaVisualizacaoDeTarefas(usuario);
+			 mensagemBoasVindas(nomeUsuario);
 		}
 	}
-	
+
 	private void entrarUsuarioExistenteActionPerformed(ActionEvent evt) {
 		
 		String nomeUsuario = jComboBoxListaUsuarios.getSelectedItem().toString();
 		if (nomeUsuario.length() == 0){
 			JOptionPane.showMessageDialog(null, "Favor, Selecione um Usuário!");
 		} else {
-			JOptionPane.showMessageDialog(null, "Bem Vindo, " + nomeUsuario + ", ao Sistema ÉFIFOTaskManager!");
-			Usuario usuario = tl.buscaUmUsuario(nomeUsuario);
-			Thread alarme = new Thread(new Alarme(usuario));
-			alarme.start();
-			new TelaVisualizacaoDeTarefas(usuario);
-			this.dispose();
+			 mensagemBoasVindas(nomeUsuario);
 		}
 	}
 	
+	private void mensagemBoasVindas(String nomeUsuario){
+		JOptionPane.showMessageDialog(null, "Bem Vindo, " + nomeUsuario + ", ao Sistema ÉFIFOTaskManager!");
+		Usuario usuario = tl.buscaUmUsuario(nomeUsuario);
+		Thread alarme = new Thread(new Alarme(usuario));
+		alarme.start();
+		new TelaVisualizacaoDeTarefas(usuario);
+		this.dispose();
+	}
 	private void removerUsuarioExistenteActionPerformed(ActionEvent e) {
 		String nomeUsuario = jComboBoxListaUsuarios.getSelectedItem().toString();
 		Usuario usuarioExcluido = tl.buscaUmUsuario(nomeUsuario);
@@ -121,7 +120,7 @@ public class TelaInicial extends Tela {
 		jPanelUsuario.setLayout(new FlowLayout());
 		jLabelUsuarioNovo = new JLabel("Usuário: ");
 		jTextFieldNovoUsuario = new JTextField(15);
-		jButtonEntrarNovoUsuario = new JButton("Entrar");
+		jButtonEntrarNovoUsuario = new JButton("Criar");
 		jButtonEntrarNovoUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
                 entrarNovoUsuarioActionPerformed(evt);

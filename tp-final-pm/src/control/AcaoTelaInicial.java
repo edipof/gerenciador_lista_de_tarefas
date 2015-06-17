@@ -42,9 +42,7 @@ public class AcaoTelaInicial {
 			
 			if (usuario.getNome().equals(user)){
 				aux = usuario;
-			} else
-				aux = null;
-			
+			} 
 		}
 		return aux;
 	}
