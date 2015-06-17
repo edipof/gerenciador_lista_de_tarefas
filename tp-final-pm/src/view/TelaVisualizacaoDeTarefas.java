@@ -13,6 +13,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import control.AcaoRemoveTarefa;
 import model.Lembrete;
 import model.Tarefa;
 import model.TarefaProgressiva;
@@ -24,7 +25,7 @@ import model.dao.DaoTarefaProgressiva;
 import model.dao.DaoTarefaSimples;
 import model.dao.DaoUsuario;
 
-public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
+public class TelaVisualizacaoDeTarefas extends Tela {
 	
 	private javax.swing.JButton jButtonEditar;
 	private javax.swing.JButton jButtonCriar;
@@ -153,7 +154,7 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 	    
 	    String[] colunasTarefasProgressivas = {"Id", "Títutlo", "Descricao", "Data", "Progresso"};
 	    JTable tarefasProgressivas = converteMatrizParaJTable(obtemMatrizDeTarefasProgressivas(usuario, listaTarefasParaEditar), colunasTarefasProgressivas);
-	    tarefasProgressivas.setName("Tarefas Simples");
+	    tarefasProgressivas.setName("Tarefas Progressivas");
 
 		// Create and set up the window.
 		final JFrame frame = new JFrame("Minhas tarefas");
@@ -198,54 +199,49 @@ public class TelaVisualizacaoDeTarefas extends javax.swing.JFrame {
 		jButtonRemover.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				metodoAcaoClicarBotaoRemover(frame, listaTarefasParaEditar);
+				metodoAcaoClicarBotaoRemover(jTabbedPaneContainer, frame, listaTarefasParaEditar);
 			} 
         });
 		
-		JPanel botao = new JPanel();
-	    BoxLayout layoutBotao = new BoxLayout(botao, BoxLayout.LINE_AXIS);
-	    botao.setLayout(layoutBotao);
-	    botao.add(jButtonEditar);
-	    botao.add(jButtonCriar);
+		JPanel botoes = new JPanel();
+	    BoxLayout layoutBotao = new BoxLayout(botoes, BoxLayout.LINE_AXIS);
+	    botoes.setLayout(layoutBotao);
+	    botoes.add(jButtonEditar);
+	    botoes.add(jButtonCriar);
+	    botoes.add(jButtonRemover);
 	    
 	    JPanel p = new JPanel(new BorderLayout());
-	    p.add(botao, BorderLayout.PAGE_END);
+	    p.add(botoes, BorderLayout.PAGE_END);
 
 	    //adicionando os elementos a tela
-	    jTabbedPaneContainer.add(botao);
+	    jTabbedPaneContainer.add(botoes);
 	    frame.add(jTabbedPaneContainer);
-		frame.add(botao, BorderLayout.PAGE_END);
+		frame.add(botoes, BorderLayout.PAGE_END);
     }
 
     
-    void metodoAcaoClicarBotaoRemover (JFrame frame, ArrayList<Tarefa> listaTarefasParaEditar) {
+    void metodoAcaoClicarBotaoRemover (JTabbedPane jTabbedPaneContainer, JFrame frame, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
     	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
     	
     	System.out.println("aba:" + abaAtual);
-    	
-//    	Component aba = jTabbedPaneContainer.getComponentAt(abaAtual).getName();
+//    	
     	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
     	final String tipoTarefa = tabela.getName();
     	System.out.println("=============" + tipoTarefa + "=============");
-//    	System.out.println(aba);
     	System.out.println("linha:" + tabela.getSelectedRow());
     	Object idElementoNoBanco = (Object) tabela.getModel().getValueAt(tabela.getSelectedRow(), 0);
     	System.out.println("id da tarefa no banco:" + idElementoNoBanco.toString());
-//    	System.out.println(jTabbedPaneContainer.getTabComponentAt(abaAtual).getName());
     	System.out.println("---------------------------------------------------");
     	
-    	final ArrayList<String> nomesColunas = new ArrayList<String>();
-    	final ArrayList<String> conteudoColunas = new ArrayList<String>();
+    	String idTarefaRemocaoPendente = idElementoNoBanco.toString();
     	
-    	for (int i = 0; i < tabela.getColumnCount(); i++) {
-    		
-    		nomesColunas.add(tabela.getModel().getColumnName(i));
-    		conteudoColunas.add(tabela.getModel().getValueAt(tabela.getSelectedRow(), i).toString());
-    	}
+    	Tarefa tarefaRemocaoPendente = buscaTarefaPorId(listaTarefasParaEditar, idTarefaRemocaoPendente);
     	
-    	System.out.println(nomesColunas.toString());
-    	System.out.println(conteudoColunas.toString());
+    	AcaoRemoveTarefa a = new AcaoRemoveTarefa();
+    	a.remove(tarefaRemocaoPendente);
+    	frame.revalidate();
+    	frame.repaint();
     	
 	}
     
