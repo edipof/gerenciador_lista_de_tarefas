@@ -6,7 +6,7 @@ import javax.swing.JTextArea;
 import model.entidade.Usuario;
 import control.AcaoCriaTarefa;
 
-public class TelaCriarTarefa extends javax.swing.JFrame {
+public class TelaCriarTarefa extends Tela {
 	
 	/**
 	 * 

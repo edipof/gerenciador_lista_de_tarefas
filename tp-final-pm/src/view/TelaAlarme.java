@@ -1,16 +1,15 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.entidade.Lembrete;
 
-import java.awt.Color;
-import java.awt.Font;
-
-public class TelaAlarme extends JFrame{
+public class TelaAlarme extends Tela{
 	/**
 	 * 
 	 */

@@ -13,7 +13,7 @@ import model.entidade.Usuario;
 import control.AcaoTelaInicial;
 import control.Alarme;
 
-public class TelaInicial extends JFrame {
+public class TelaInicial extends Tela {
 	
 	private static final long serialVersionUID = 5222388480306127381L;
 
@@ -35,8 +35,6 @@ public class TelaInicial extends JFrame {
 	private JButton jButtonRemoveUsuario;
 	
 	public TelaInicial() {
-		
-		super("ÉFIFOTaskManager");
 		initComponents();
 	}
 	

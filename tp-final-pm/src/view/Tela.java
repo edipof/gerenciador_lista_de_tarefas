@@ -13,6 +13,10 @@ public class Tela extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	public Tela(){
+		super("ÉFIFOTaskManager");
+	}
+	
 	public Tarefa buscaTarefaPorId (ArrayList<Tarefa> listaTarefas, String id) {
 		
 		Tarefa tarefa = null;
