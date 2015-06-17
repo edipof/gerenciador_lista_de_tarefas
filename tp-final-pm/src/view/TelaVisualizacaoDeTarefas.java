@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -23,11 +22,8 @@ import model.entidade.Tarefa;
 import model.entidade.TarefaProgressiva;
 import model.entidade.TarefaSimples;
 import model.entidade.Usuario;
-import model.operacoesBD.ManipuladorBancoDados;
-import model.operacoesBD.ManipuladorTarefaLembrete;
-import model.operacoesBD.ManipuladorTarefaProgressiva;
-import model.operacoesBD.ManipuladorTarefaSimples;
 import control.AcaoRemoveTarefa;
+import control.AcaoVisualizaTarefa;
 
 public class TelaVisualizacaoDeTarefas extends Tela {
 
@@ -36,20 +32,13 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 	private javax.swing.JButton jButtonCriar;
 	private javax.swing.JButton jButtonRemover;
 	private javax.swing.JTabbedPane jTabbedPaneContainer;
-	
+	private AcaoVisualizaTarefa acaoVizualiza = new AcaoVisualizaTarefa();
 	
 	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasSimples(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
-		ManipuladorBancoDados<TarefaSimples> tarefaDTO = new ManipuladorTarefaSimples();
 		ArrayList<TarefaSimples>listaTarefasSimples = new ArrayList<TarefaSimples>();
 		
-		try{
-			listaTarefasSimples = tarefaDTO.selectListaEntidadeComParametro(usuario);
-		}catch(SQLException e){
-			JOptionPane.showMessageDialog(null, "Erro inesperado na aplicação");
-    		this.dispose();
-		}
-		
+		listaTarefasSimples=acaoVizualiza.getListaTarefasSimples(this, usuario);
 		
 		ArrayList<ArrayList<String>> tarefas = new ArrayList<ArrayList<String>>();
 		
@@ -72,17 +61,9 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 	
 	public ArrayList<ArrayList<String>> obtemMatrizDeLembretes(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar){ /* throws alguma excecao que nao faco ideia qual eh*/
 		
-		
-		ManipuladorBancoDados<Lembrete> lembreteDTO = new ManipuladorTarefaLembrete();
-		
 		ArrayList<Lembrete> listaLembretes = new ArrayList<Lembrete>();
 		
-		try{
-			listaLembretes = lembreteDTO.selectListaEntidadeComParametro(usuario);
-		}catch(SQLException e){
-			JOptionPane.showMessageDialog(null, "Erro inesperado na aplicação");
-    		this.dispose();
-		}
+		listaLembretes=acaoVizualiza.getListaLembrete(this, usuario);
 		
 		ArrayList<ArrayList<String>> lembretes = new ArrayList<ArrayList<String>>();
 		
@@ -105,15 +86,9 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 
 	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasProgressivas(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
-		ManipuladorBancoDados<TarefaProgressiva> tarefaDTO = new ManipuladorTarefaProgressiva();
 		ArrayList<TarefaProgressiva> listaTarefasProgressiva = new ArrayList<TarefaProgressiva>();
 		
-		try{
-			listaTarefasProgressiva = tarefaDTO.selectListaEntidadeComParametro(usuario);
-		}catch(SQLException e){
-			JOptionPane.showMessageDialog(null, "Erro inesperado na aplicação");
-    		this.dispose();
-		}
+		listaTarefasProgressiva = acaoVizualiza.getListaTarefasProgressiva(this, usuario);
 		
 		ArrayList<ArrayList<String>> tarefas = new ArrayList<ArrayList<String>>();
 		
