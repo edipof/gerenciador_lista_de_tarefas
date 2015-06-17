@@ -107,7 +107,7 @@ public class TelaEdicaoDeTarefas extends Tela {
 		jButtonSalvar.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				metodoAcaoClicarBotaoSalvar(painel, listaTarefasParaEditar);
+				metodoAcaoClicarBotaoSalvar(painel, listaTarefasParaEditar, frame, usuario);
 			} 
         });
 		painel.add(jButtonSalvar, gbc);
@@ -121,7 +121,7 @@ public class TelaEdicaoDeTarefas extends Tela {
         frame.setVisible(true);
     }
     
-    public void metodoAcaoClicarBotaoSalvar (Container painel, ArrayList<Tarefa> listaTarefasParaEditar) {
+    public void metodoAcaoClicarBotaoSalvar (Container painel, ArrayList<Tarefa> listaTarefasParaEditar, JFrame frame, Usuario usuario) {
 		
 		ArrayList<String> dadosFormulario = new ArrayList<String>(); 
     	
@@ -139,11 +139,20 @@ public class TelaEdicaoDeTarefas extends Tela {
     	Tarefa tarefa = buscaTarefaPorId(listaTarefasParaEditar, idTarefa);
     	
     	if (tarefa != null) {
+    		
         	AcaoEditaTarefa a = new AcaoEditaTarefa();
         	
-    		a.atualizaTarefa(tarefa, dadosFormulario);
-    		/*depois da validacao: */ 
-    		JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
+        	if (isValido(tarefa, dadosFormulario)) {
+        		
+        		a.atualizaTarefa(tarefa, dadosFormulario);
+        		/*depois da validacao: */ 
+        		JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
+        		
+        	} else {
+        		
+        		frame.dispose();
+        		new TelaVisualizacaoDeTarefas(usuario);
+        	}
 		}
     }
     public Boolean isValido(Tarefa tarefa, ArrayList<String> dadosFormulario){
