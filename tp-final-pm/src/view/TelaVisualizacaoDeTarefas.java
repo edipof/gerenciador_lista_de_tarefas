@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
-import javax.swing.JDialog;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import model.Lembrete;
@@ -138,6 +139,15 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     		
     		modelo.addRow(new Vector<Object>(i));
     	}
+    	
+    	//tentando deixar a tabela nao editavel
+    	
+    	JTextField campoSemEdicao = new JTextField();
+    	campoSemEdicao.setEditable(false);
+    	DefaultCellEditor editor = new DefaultCellEditor( campoSemEdicao );
+    	tabela.setDefaultEditor(Object.class, editor);
+    	// fim
+    	
     	
     	return tabela;
     }

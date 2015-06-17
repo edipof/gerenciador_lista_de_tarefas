@@ -79,13 +79,23 @@ public class TelaEdicaoDeTarefas extends Tela {
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.CENTER;
+
+        //desabilitando edicao para o campo de id
+        String id = conteudoColunas.remove(0);
+        JTextField campo = new JTextField(id);
+    	campo.setPreferredSize(new Dimension(400, 20));
+    	campo.setEnabled(false);
+    	painel.add(campo, gbc);
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        
         
         for (String conteudo : conteudoColunas) {
 			
-        	JTextField campo = new JTextField(conteudo);
+        	campo = new JTextField(conteudo);
         	campo.setPreferredSize(new Dimension(400, 20));
         	painel.add(campo, gbc);
             gbc.gridy = GridBagConstraints.RELATIVE;
+
 		}
 
 //        painel.add(new JTextField(35), gbc);
