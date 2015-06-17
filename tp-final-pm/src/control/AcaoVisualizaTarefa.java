@@ -18,7 +18,7 @@ import model.operacoesBD.ManipuladorTarefaSimples;
 public class AcaoVisualizaTarefa {
 	
 	public ArrayList<TarefaSimples> getListaTarefasSimples(JFrame frame, Usuario usuario){
-		ManipuladorBancoDados<TarefaSimples> tarefaDTO = new ManipuladorTarefaSimples();
+		ManipuladorBancoDados<TarefaSimples> tarefaDTO = ManipuladorTarefaSimples.getInstance();
 		ArrayList<TarefaSimples>listaTarefasSimples = new ArrayList<TarefaSimples>();
 		
 		try{
@@ -32,7 +32,7 @@ public class AcaoVisualizaTarefa {
 	}
 	
 	public ArrayList<Lembrete> getListaLembrete(JFrame frame, Usuario usuario){
-		ManipuladorBancoDados<Lembrete> lembreteDTO = new ManipuladorTarefaLembrete();
+		ManipuladorBancoDados<Lembrete> lembreteDTO = ManipuladorTarefaLembrete.getInstance();
 		
 		ArrayList<Lembrete> listaLembretes = new ArrayList<Lembrete>();
 		
@@ -46,7 +46,7 @@ public class AcaoVisualizaTarefa {
 	}
 	
 	public ArrayList<TarefaProgressiva> getListaTarefasProgressiva(JFrame frame, Usuario usuario){
-		ManipuladorBancoDados<TarefaProgressiva> tarefaDTO = new ManipuladorTarefaProgressiva();
+		ManipuladorBancoDados<TarefaProgressiva> tarefaDTO = ManipuladorTarefaProgressiva.getInstance();
 		ArrayList<TarefaProgressiva> listaTarefasProgressiva = new ArrayList<TarefaProgressiva>();
 		
 		try{

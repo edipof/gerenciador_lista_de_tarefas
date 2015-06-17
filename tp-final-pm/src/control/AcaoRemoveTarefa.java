@@ -18,12 +18,12 @@ public class AcaoRemoveTarefa {
 			
 			TarefaSimples tarefaSimples = (TarefaSimples) tarefa;
 			
-			ManipuladorBancoDados<TarefaSimples> m = new ManipuladorTarefaSimples();
+			ManipuladorBancoDados<TarefaSimples> m =ManipuladorTarefaSimples.getInstance();
 			m.removeEntidade(tarefaSimples);
 			
 		} else if (tarefa instanceof TarefaProgressiva) {
 			
-			ManipuladorBancoDados<TarefaProgressiva> m = new ManipuladorTarefaProgressiva();
+			ManipuladorBancoDados<TarefaProgressiva> m = ManipuladorTarefaProgressiva.getInstance();
 			
 			TarefaProgressiva tarefaProgressiva = (TarefaProgressiva) tarefa;
 			m.removeEntidade(tarefaProgressiva);
@@ -31,7 +31,7 @@ public class AcaoRemoveTarefa {
 			
 		} else if (tarefa instanceof Lembrete) {
 			
-			ManipuladorBancoDados<Lembrete> m = new ManipuladorTarefaLembrete();
+			ManipuladorBancoDados<Lembrete> m = ManipuladorTarefaLembrete.getInstance();
 			
 			Lembrete lembrete = (Lembrete) tarefa;
 			m.removeEntidade(lembrete);

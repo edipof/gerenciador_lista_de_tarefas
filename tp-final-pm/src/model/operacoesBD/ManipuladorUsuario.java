@@ -13,6 +13,16 @@ public class ManipuladorUsuario extends ManipuladorBancoDados<Usuario> {
 	private boolean retorno = false;
 	private ComandosSqlSingleton sql = getComandosSQL();
 	
+	private static ManipuladorUsuario instancia;
+	
+	private ManipuladorUsuario(){
+	}
+	
+	public static synchronized ManipuladorUsuario getInstance() {
+		if (instancia == null)
+			instancia = new ManipuladorUsuario();
+		return instancia;
+	}
 	@Override
 	public ArrayList<Usuario> selectListaEntidadeComParametro(Object o){
 		//nao tem necessidade de implementar esse metodo no momento
