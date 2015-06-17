@@ -19,7 +19,7 @@ public class AcaoEditaTarefa {
 			
 			TarefaSimples tarefaSimples = (TarefaSimples) tarefa;
 			
-			ManipuladorBancoDados<TarefaSimples> m = new ManipuladorTarefaSimples();
+			ManipuladorBancoDados<TarefaSimples> m = ManipuladorTarefaSimples.getInstance();
 			tarefaSimples.setTitulo(dadosFormulario.get(0));
 			tarefaSimples.setDescricao(dadosFormulario.get(1));
 			
@@ -27,7 +27,7 @@ public class AcaoEditaTarefa {
 			
 		} else if (tarefa instanceof TarefaProgressiva) {
 			
-			ManipuladorBancoDados<TarefaProgressiva> m = new ManipuladorTarefaProgressiva();
+			ManipuladorBancoDados<TarefaProgressiva> m = ManipuladorTarefaProgressiva.getInstance();
 			
 			TarefaProgressiva tarefaProgressiva = (TarefaProgressiva) tarefa;
 			
@@ -42,7 +42,7 @@ public class AcaoEditaTarefa {
 			
 		} else if (tarefa instanceof Lembrete) {
 			
-			ManipuladorBancoDados<Lembrete> m = new ManipuladorTarefaLembrete();
+			ManipuladorBancoDados<Lembrete> m = ManipuladorTarefaLembrete.getInstance();
 			
 			Lembrete lembrete = (Lembrete) tarefa;
 			

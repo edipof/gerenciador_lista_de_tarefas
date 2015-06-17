@@ -13,6 +13,17 @@ public class ManipuladorTarefaProgressiva extends ManipuladorBancoDados<TarefaPr
 	private boolean retorno = false;
 	private ComandosSqlSingleton sql = getComandosSQL();
 	
+	private static ManipuladorTarefaProgressiva instancia;
+	
+	private ManipuladorTarefaProgressiva(){
+	}
+	
+	public static synchronized ManipuladorTarefaProgressiva getInstance() {
+		if (instancia == null)
+			instancia = new ManipuladorTarefaProgressiva();
+		return instancia;
+	}
+	
 	@Override
 	public ArrayList<TarefaProgressiva> selectListaEntidade() {
 		return null;
