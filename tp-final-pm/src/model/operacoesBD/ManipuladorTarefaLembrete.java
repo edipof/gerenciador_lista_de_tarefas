@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.Lembrete;
-import model.Usuario;
+import model.entidade.Lembrete;
+import model.entidade.Usuario;
 
 public class ManipuladorTarefaLembrete extends ManipuladorBancoDados<Lembrete> {
 	private boolean retorno = false;

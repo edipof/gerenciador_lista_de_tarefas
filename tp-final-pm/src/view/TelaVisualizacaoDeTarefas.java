@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -17,19 +18,20 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import model.Lembrete;
-import model.Tarefa;
-import model.TarefaProgressiva;
-import model.TarefaSimples;
-import model.Usuario;
-import model.dao.DAO;
-import model.dao.DaoLembrete;
-import model.dao.DaoTarefaProgressiva;
-import model.dao.DaoTarefaSimples;
+import model.entidade.Lembrete;
+import model.entidade.Tarefa;
+import model.entidade.TarefaProgressiva;
+import model.entidade.TarefaSimples;
+import model.entidade.Usuario;
+import model.operacoesBD.ManipuladorBancoDados;
+import model.operacoesBD.ManipuladorTarefaLembrete;
+import model.operacoesBD.ManipuladorTarefaProgressiva;
+import model.operacoesBD.ManipuladorTarefaSimples;
 import control.AcaoRemoveTarefa;
 
 public class TelaVisualizacaoDeTarefas extends Tela {
-	
+
+	private static final long serialVersionUID = 1L;
 	private javax.swing.JButton jButtonEditar;
 	private javax.swing.JButton jButtonCriar;
 	private javax.swing.JButton jButtonRemover;
@@ -38,10 +40,16 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 	
 	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasSimples(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
+		ManipuladorBancoDados<TarefaSimples> tarefaDTO = new ManipuladorTarefaSimples();
+		ArrayList<TarefaSimples>listaTarefasSimples = new ArrayList<TarefaSimples>();
 		
-		DAO<TarefaSimples,Usuario> tarefaDTO = new DaoTarefaSimples();
+		try{
+			listaTarefasSimples = tarefaDTO.selectListaEntidadeComParametro(usuario);
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Erro inesperado no servidor");
+    		this.dispose();
+		}
 		
-		ArrayList<TarefaSimples>listaTarefasSimples = tarefaDTO.getLista(usuario);
 		
 		ArrayList<ArrayList<String>> tarefas = new ArrayList<ArrayList<String>>();
 		
@@ -65,11 +73,16 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 	public ArrayList<ArrayList<String>> obtemMatrizDeLembretes(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar){ /* throws alguma excecao que nao faco ideia qual eh*/
 		
 		
-		DAO<Lembrete,Usuario> lembreteDTO = new DaoLembrete();
+		ManipuladorBancoDados<Lembrete> lembreteDTO = new ManipuladorTarefaLembrete();
 		
-
+		ArrayList<Lembrete> listaLembretes = new ArrayList<Lembrete>();
 		
-		ArrayList<Lembrete> listaLembretes = lembreteDTO.getLista(usuario);
+		try{
+			listaLembretes = lembreteDTO.selectListaEntidadeComParametro(usuario);
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Erro inesperado no servidor");
+    		this.dispose();
+		}
 		
 		ArrayList<ArrayList<String>> lembretes = new ArrayList<ArrayList<String>>();
 		
@@ -87,17 +100,20 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 			
 			lembretes.add(listaAux);
 		}
-		
 		return lembretes;
-		
 	}
 
 	public ArrayList<ArrayList<String>> obtemMatrizDeTarefasProgressivas(Usuario usuario, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
+		ManipuladorBancoDados<TarefaProgressiva> tarefaDTO = new ManipuladorTarefaProgressiva();
+		ArrayList<TarefaProgressiva> listaTarefasProgressiva = new ArrayList<TarefaProgressiva>();
 		
-		DAO<TarefaProgressiva,Usuario> tarefaDTO = new DaoTarefaProgressiva();
-		
-		ArrayList<TarefaProgressiva> listaTarefasProgressiva = tarefaDTO.getLista(usuario);
+		try{
+			listaTarefasProgressiva = tarefaDTO.selectListaEntidadeComParametro(usuario);
+		}catch(SQLException e){
+			JOptionPane.showMessageDialog(null, "Erro inesperado no servidor");
+    		this.dispose();
+		}
 		
 		ArrayList<ArrayList<String>> tarefas = new ArrayList<ArrayList<String>>();
 		
@@ -115,9 +131,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 			
 			tarefas.add(listaAux);
 		}
-		
 		return tarefas;
-
 	}
 	
     public TelaVisualizacaoDeTarefas(Usuario usuario) {
@@ -129,14 +143,12 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     	DefaultTableModel modelo = new DefaultTableModel();
     	
     	for (String coluna : colunas) {
-    		
     		modelo.addColumn(coluna);	
     	}
     	
         JTable tabela = new JTable(modelo);
         
     	for (ArrayList<String> i : matriz) {
-    		
     		modelo.addRow(new Vector<Object>(i));
     	}
     	
@@ -147,7 +159,6 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     	DefaultCellEditor editor = new DefaultCellEditor( campoSemEdicao );
     	tabela.setDefaultEditor(Object.class, editor);
     	// fim
-    	
     	
     	return tabela;
     }
@@ -235,23 +246,15 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     void metodoAcaoClicarBotaoRemover (JTabbedPane jTabbedPaneContainer, JFrame frame, ArrayList<Tarefa> listaTarefasParaEditar, Usuario usuario) {
 		
     	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
-    	
-    	System.out.println("aba:" + abaAtual);
-//    	
     	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
     	final String tipoTarefa = tabela.getName();
-    	System.out.println("=============" + tipoTarefa + "=============");
-    	System.out.println("linha:" + tabela.getSelectedRow());
     	Object idElementoNoBanco = (Object) tabela.getModel().getValueAt(tabela.getSelectedRow(), 0);
-    	System.out.println("id da tarefa no banco:" + idElementoNoBanco.toString());
-    	System.out.println("---------------------------------------------------");
     	
     	String idTarefaRemocaoPendente = idElementoNoBanco.toString();
     	
     	Tarefa tarefaRemocaoPendente = buscaTarefaPorId(listaTarefasParaEditar, idTarefaRemocaoPendente);
     	
     	int result = JOptionPane.showConfirmDialog((Component) null, "tem certeza?", "alert", JOptionPane.OK_CANCEL_OPTION);
-    	System.out.println("resultado okcancel: " + result);
     	
     	if (result == 0) {
     		AcaoRemoveTarefa a = new AcaoRemoveTarefa();
@@ -260,25 +263,15 @@ public class TelaVisualizacaoDeTarefas extends Tela {
         	new TelaVisualizacaoDeTarefas(usuario);
         	JOptionPane.showMessageDialog(null, "Tarefa removida com sucesso!");
     	}
-    	
 	}
     
     void metodoAcaoClicarBotaoEditar (JTabbedPane jTabbedPaneContainer, final ArrayList<Tarefa> listaTarefasParaEditar, JFrame frame, final Usuario usuario) {
 		
     	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
     	
-    	System.out.println("aba:" + abaAtual);
-    	
-//    	Component aba = jTabbedPaneContainer.getComponentAt(abaAtual).getName();
     	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
     	final String tipoTarefa = tabela.getName();
-    	System.out.println("=============" + tipoTarefa + "=============");
-//    	System.out.println(aba);
-    	System.out.println("linha:" + tabela.getSelectedRow());
     	Object idElementoNoBanco = (Object) tabela.getModel().getValueAt(tabela.getSelectedRow(), 0);
-    	System.out.println("id da tarefa no banco:" + idElementoNoBanco.toString());
-//    	System.out.println(jTabbedPaneContainer.getTabComponentAt(abaAtual).getName());
-    	System.out.println("---------------------------------------------------");
     	
     	final ArrayList<String> nomesColunas = new ArrayList<String>();
     	final ArrayList<String> conteudoColunas = new ArrayList<String>();
@@ -288,10 +281,6 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     		nomesColunas.add(tabela.getModel().getColumnName(i));
     		conteudoColunas.add(tabela.getModel().getValueAt(tabela.getSelectedRow(), i).toString());
     	}
-    	
-    	System.out.println(nomesColunas.toString());
-    	System.out.println(conteudoColunas.toString());
-    	
     	java.awt.EventQueue.invokeLater(new Runnable() {
     		public void run() {
     			new TelaEdicaoDeTarefas(nomesColunas, conteudoColunas, listaTarefasParaEditar, usuario);
@@ -301,7 +290,6 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 	}
     
     void metodoAcaoClicarBotaoCriar (JFrame frame, final Usuario usuario) {
-		
     	
     	java.awt.EventQueue.invokeLater(new Runnable() {
     		public void run() {
@@ -315,5 +303,11 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     	frame.dispose();
 	}
 
+	public javax.swing.JTabbedPane getjTabbedPaneContainer() {
+		return jTabbedPaneContainer;
+	}
 
+	public void setjTabbedPaneContainer(javax.swing.JTabbedPane jTabbedPaneContainer) {
+		this.jTabbedPaneContainer = jTabbedPaneContainer;
+	}
 }

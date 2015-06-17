@@ -3,18 +3,16 @@ package view;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
+import model.entidade.Usuario;
 import control.AcaoCriaTarefa;
-import model.Lembrete;
-import model.TarefaProgressiva;
-import model.TarefaSimples;
-import model.Usuario;
-import model.dao.DAO;
-import model.dao.DaoLembrete;
-import model.dao.DaoTarefaProgressiva;
-import model.dao.DaoTarefaSimples;
 
 public class TelaCriarTarefa extends javax.swing.JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private javax.swing.JButton jButtonSalvar;
 	  
 	private javax.swing.JLabel jLabelTSTitulo;
@@ -108,9 +106,6 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
         jTextAreaFieldLDescricao.setColumns(20);
         jTextAreaFieldLDescricao.setRows(5);
         jScrollPane1.setViewportView(jTextAreaFieldTSDescricao);
-        //jTextAreaObservacao.setColumns(20);
-        //jTextAreaObservacao.setRows(5);
-        //jScrollPane1.setViewportView(jTextAreaObservacao);
         jButtonSalvar.setText("Salvar");
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -277,6 +272,9 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     			if (tp_data.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})") == false){
     				JOptionPane.showMessageDialog(null, "A data deve estar no formato dd/mm/aaaa");
     				return;
+            	}else if(tp_progresso.intValue() < 0 || tp_progresso.intValue() > 100 ){
+            		JOptionPane.showMessageDialog(null, "O progresso deve estrar entre 0 e 100");
+    				return;
             	}
     			AcaoCriaTarefa a = new AcaoCriaTarefa(u);
     			a.insereTarefaProgressiva(tp_titulo, tp_desc, tp_data, tp_progresso);
@@ -311,6 +309,5 @@ public class TelaCriarTarefa extends javax.swing.JFrame {
     		this.dispose();
     		new TelaVisualizacaoDeTarefas(u);
     	}
-    }//GEN-LAST:event_jButtonSalvarActionPerformed
-  	      
+    }
 }

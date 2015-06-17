@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import model.Usuario;
+import model.entidade.Usuario;
 import control.AcaoTelaInicial;
 import control.Alarme;
 

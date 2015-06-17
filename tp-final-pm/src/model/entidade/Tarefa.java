@@ -1,4 +1,4 @@
-package model;
+package model.entidade;
 
 public abstract class Tarefa {
 	

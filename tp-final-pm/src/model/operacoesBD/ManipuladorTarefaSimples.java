@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.TarefaSimples;
-import model.Usuario;
+import model.entidade.TarefaSimples;
+import model.entidade.Usuario;
 
 public class ManipuladorTarefaSimples extends ManipuladorBancoDados<TarefaSimples>{
 	private boolean retorno = false;

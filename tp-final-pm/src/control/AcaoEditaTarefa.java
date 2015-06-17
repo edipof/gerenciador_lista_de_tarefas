@@ -2,10 +2,10 @@ package control;
 
 import java.util.ArrayList;
 
-import model.Lembrete;
-import model.Tarefa;
-import model.TarefaProgressiva;
-import model.TarefaSimples;
+import model.entidade.Lembrete;
+import model.entidade.Tarefa;
+import model.entidade.TarefaProgressiva;
+import model.entidade.TarefaSimples;
 import model.operacoesBD.ManipuladorBancoDados;
 import model.operacoesBD.ManipuladorTarefaLembrete;
 import model.operacoesBD.ManipuladorTarefaProgressiva;

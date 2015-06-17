@@ -1,21 +1,13 @@
 package control;
 
-import view.TelaAlarme;
-
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import model.dao.DaoLembrete;
-import model.Lembrete;
-
 import java.util.ArrayList;
+import java.util.Date;
 
-import view.TelaAlarme;
+import model.entidade.Lembrete;
+import model.entidade.Usuario;
 import model.operacoesBD.ManipuladorTarefaLembrete;
-import model.Usuario;
+import view.TelaAlarme;
 
 
 public class Alarme implements Runnable{
@@ -55,6 +47,7 @@ public class Alarme implements Runnable{
 			if (!this.lembretes.isEmpty()){
 				for (Lembrete l: this.lembretes){
 					if (l.getData().equals(data_atual)  && l.getHora().equals(hora_atual)){
+						@SuppressWarnings("unused")
 						TelaAlarme ta = new TelaAlarme(l);
 					}
 				}
@@ -62,7 +55,6 @@ public class Alarme implements Runnable{
 			try {
 				Thread.sleep(59000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

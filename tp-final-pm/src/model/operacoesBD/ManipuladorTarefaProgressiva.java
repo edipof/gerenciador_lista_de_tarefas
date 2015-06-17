@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.TarefaProgressiva;
-import model.Usuario;
+import model.entidade.TarefaProgressiva;
+import model.entidade.Usuario;
 
 public class ManipuladorTarefaProgressiva extends ManipuladorBancoDados<TarefaProgressiva> {
 	private boolean retorno = false;

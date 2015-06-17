@@ -5,12 +5,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import model.Lembrete;
+import model.entidade.Lembrete;
 
 import java.awt.Color;
 import java.awt.Font;
 
 public class TelaAlarme extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel painel;
 	private JLabel aviso = new JLabel();
 	private JLabel titulo = new JLabel();

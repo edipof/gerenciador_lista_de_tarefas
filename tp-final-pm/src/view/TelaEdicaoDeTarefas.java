@@ -20,20 +20,21 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import model.entidade.Lembrete;
+import model.entidade.Tarefa;
+import model.entidade.TarefaProgressiva;
+import model.entidade.TarefaSimples;
+import model.entidade.Usuario;
 import control.AcaoEditaTarefa;
-import model.Lembrete;
-import model.Tarefa;
-import model.TarefaProgressiva;
-import model.TarefaSimples;
-import model.Usuario;
-import model.operacoesBD.ManipuladorBancoDados;
-import model.operacoesBD.ManipuladorTarefaLembrete;
-import model.operacoesBD.ManipuladorTarefaProgressiva;
-import model.operacoesBD.ManipuladorTarefaSimples;
 
 public class TelaEdicaoDeTarefas extends Tela {
 	
-    public TelaEdicaoDeTarefas(ArrayList<String> nomesColunas,ArrayList<String> conteudoColunas, ArrayList<Tarefa> listaTarefasParaEditar, Usuario usuario) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public TelaEdicaoDeTarefas(ArrayList<String> nomesColunas,ArrayList<String> conteudoColunas, ArrayList<Tarefa> listaTarefasParaEditar, Usuario usuario) {
         geraVisualizacao(nomesColunas, conteudoColunas, listaTarefasParaEditar, usuario);
     }
     
@@ -57,11 +58,6 @@ public class TelaEdicaoDeTarefas extends Tela {
             painel.add(new JLabel(nome, SwingConstants.RIGHT), gbc);
 		}
         
-//        painel.add(new JLabel("Título:", SwingConstants.RIGHT), gbc);
-//        painel.add(new JLabel("Descrição:", SwingConstants.RIGHT), gbc);
-//        painel.add(new JLabel("Data", SwingConstants.RIGHT), gbc);
-//        painel.add(new JLabel("Hora", SwingConstants.RIGHT), gbc);
-//        painel.add(new JLabel("Progresso", SwingConstants.RIGHT), gbc);
       //configurando o botao de fechar
       		JButton jButtonFechar = new javax.swing.JButton();
       		jButtonFechar.setText("Fechar");
@@ -72,7 +68,6 @@ public class TelaEdicaoDeTarefas extends Tela {
       			} 
               });
       		painel.add(jButtonFechar, gbc);
-        
         
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -88,7 +83,6 @@ public class TelaEdicaoDeTarefas extends Tela {
     	painel.add(campo, gbc);
         gbc.gridy = GridBagConstraints.RELATIVE;
         
-        
         for (String conteudo : conteudoColunas) {
 			
         	campo = new JTextField(conteudo);
@@ -98,13 +92,8 @@ public class TelaEdicaoDeTarefas extends Tela {
 
 		}
 
-//        painel.add(new JTextField(35), gbc);
         gbc.gridx = 1;
         gbc.gridy = GridBagConstraints.RELATIVE;
-//        painel.add(new JTextField(35), gbc);
-//        painel.add(new JTextField(35), gbc);
-//        painel.add(new JTextField(35), gbc);
-//        painel.add(new JTextField(35), gbc);
         gbc.weightx = 0.0;
         gbc.fill = GridBagConstraints.NONE;
 
@@ -118,8 +107,6 @@ public class TelaEdicaoDeTarefas extends Tela {
 			} 
         });
 		painel.add(jButtonSalvar, gbc);
-
-        
 		
         frame.pack();
         frame.addWindowListener(new WindowAdapter() {
@@ -128,44 +115,31 @@ public class TelaEdicaoDeTarefas extends Tela {
           }
         });
         frame.setVisible(true);
-
     }
     
     public void metodoAcaoClicarBotaoSalvar (Container painel, ArrayList<Tarefa> listaTarefasParaEditar) {
 		
-    	System.out.println("hello!");
 		ArrayList<String> dadosFormulario = new ArrayList<String>(); 
-
     	
     	for (int i = 0; i < painel.getComponentCount(); i ++) {
     		
     		Component componente = painel.getComponent(i);
     		
-//    		System.out.println(componente.toString());
-//    		System.out.println("classe:  >" + componente.getClass().toString() + "<");
-//    		System.out.println(componente.getClass().toString().equals("class javax.swing.JTextField"));
-//    		System.out.println("classe:  >class javax.swing.JTextField<");
-    		
     		if (componente.getClass().toString().equals("class javax.swing.JTextField")) {
-    			
     			JTextField campo = (JTextField) componente;
-    			System.out.println(">>" + campo.getText());
     			dadosFormulario.add(campo.getText());
     		}
     	}
-    	
     	String idTarefa = dadosFormulario.remove(0);
     	
     	Tarefa tarefa = buscaTarefaPorId(listaTarefasParaEditar, idTarefa);
     	
     	if (tarefa != null) {
-        	
         	AcaoEditaTarefa a = new AcaoEditaTarefa();
     		a.atualizaTarefa(tarefa, dadosFormulario);
-    		
-    		/*depois da validacao: */ JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
+    		/*depois da validacao: */ 
+    		JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
 		}
-		
     }
     public Boolean isValido(Tarefa tarefa, ArrayList<String> dadosFormulario){
 		Boolean isValido = false;
@@ -181,7 +155,6 @@ public class TelaEdicaoDeTarefas extends Tela {
     }
     
     public void metodoAcaoClicarBotaoFechar(JFrame frame, final Usuario usuario) {
-    	System.out.println("Hello!!!");
     	frame.dispose();
     	java.awt.EventQueue.invokeLater(new Runnable() {
     		public void run() {

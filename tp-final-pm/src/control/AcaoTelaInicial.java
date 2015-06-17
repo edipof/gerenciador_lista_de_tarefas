@@ -3,7 +3,7 @@ package control;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.Usuario;
+import model.entidade.Usuario;
 import model.operacoesBD.ManipuladorBancoDados;
 import model.operacoesBD.ManipuladorUsuario;
 

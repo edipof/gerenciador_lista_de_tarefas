@@ -1,4 +1,4 @@
-package model;
+package model.entidade;
 
 
 public class TarefaProgressiva extends TarefaComData {

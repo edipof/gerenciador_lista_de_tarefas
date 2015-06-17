@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.Usuario;
+import model.entidade.Usuario;
 
 public class ManipuladorUsuario extends ManipuladorBancoDados<Usuario> {
 

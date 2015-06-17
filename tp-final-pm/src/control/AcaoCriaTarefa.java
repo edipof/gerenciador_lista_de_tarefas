@@ -1,9 +1,9 @@
 package control;
 
-import model.TarefaSimples;
-import model.TarefaProgressiva;
-import model.Lembrete;
-import model.Usuario;
+import model.entidade.Lembrete;
+import model.entidade.TarefaProgressiva;
+import model.entidade.TarefaSimples;
+import model.entidade.Usuario;
 import model.operacoesBD.ManipuladorBancoDados;
 import model.operacoesBD.ManipuladorTarefaLembrete;
 import model.operacoesBD.ManipuladorTarefaProgressiva;
