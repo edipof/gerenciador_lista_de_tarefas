@@ -1,19 +1,21 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import control.AcaoRemoveTarefa;
 import model.Lembrete;
 import model.Tarefa;
 import model.TarefaProgressiva;
@@ -23,7 +25,7 @@ import model.dao.DAO;
 import model.dao.DaoLembrete;
 import model.dao.DaoTarefaProgressiva;
 import model.dao.DaoTarefaSimples;
-import model.dao.DaoUsuario;
+import control.AcaoRemoveTarefa;
 
 public class TelaVisualizacaoDeTarefas extends Tela {
 	
@@ -199,7 +201,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 		jButtonRemover.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				metodoAcaoClicarBotaoRemover(jTabbedPaneContainer, frame, listaTarefasParaEditar);
+				metodoAcaoClicarBotaoRemover(jTabbedPaneContainer, frame, listaTarefasParaEditar, usuario);
 			} 
         });
 		
@@ -220,7 +222,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     }
 
     
-    void metodoAcaoClicarBotaoRemover (JTabbedPane jTabbedPaneContainer, JFrame frame, ArrayList<Tarefa> listaTarefasParaEditar) {
+    void metodoAcaoClicarBotaoRemover (JTabbedPane jTabbedPaneContainer, JFrame frame, ArrayList<Tarefa> listaTarefasParaEditar, Usuario usuario) {
 		
     	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
     	
@@ -238,15 +240,18 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     	
     	Tarefa tarefaRemocaoPendente = buscaTarefaPorId(listaTarefasParaEditar, idTarefaRemocaoPendente);
     	
-    	AcaoRemoveTarefa a = new AcaoRemoveTarefa();
-    	a.remove(tarefaRemocaoPendente);
-    	frame.revalidate();
-    	frame.repaint();
+    	int result = JOptionPane.showConfirmDialog((Component) null, "tem certeza?", "alert", JOptionPane.OK_CANCEL_OPTION);
+    	System.out.println("resultado okcancel: " + result);
+    	
+    	if (result == 0) {
+    		AcaoRemoveTarefa a = new AcaoRemoveTarefa();
+        	a.remove(tarefaRemocaoPendente);
+        	frame.dispose();
+        	new TelaVisualizacaoDeTarefas(usuario);
+        	JOptionPane.showMessageDialog(null, "Tarefa removida com sucesso!");
+    	}
     	
 	}
-    
-
-    
     
     void metodoAcaoClicarBotaoEditar (JTabbedPane jTabbedPaneContainer, final ArrayList<Tarefa> listaTarefasParaEditar, JFrame frame, final Usuario usuario) {
 		
