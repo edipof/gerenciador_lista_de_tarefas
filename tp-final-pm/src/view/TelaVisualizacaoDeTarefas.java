@@ -46,7 +46,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 		try{
 			listaTarefasSimples = tarefaDTO.selectListaEntidadeComParametro(usuario);
 		}catch(SQLException e){
-			JOptionPane.showMessageDialog(null, "Erro inesperado no servidor");
+			JOptionPane.showMessageDialog(null, "Erro inesperado na aplicação");
     		this.dispose();
 		}
 		
@@ -80,7 +80,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 		try{
 			listaLembretes = lembreteDTO.selectListaEntidadeComParametro(usuario);
 		}catch(SQLException e){
-			JOptionPane.showMessageDialog(null, "Erro inesperado no servidor");
+			JOptionPane.showMessageDialog(null, "Erro inesperado na aplicação");
     		this.dispose();
 		}
 		
@@ -111,7 +111,7 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 		try{
 			listaTarefasProgressiva = tarefaDTO.selectListaEntidadeComParametro(usuario);
 		}catch(SQLException e){
-			JOptionPane.showMessageDialog(null, "Erro inesperado no servidor");
+			JOptionPane.showMessageDialog(null, "Erro inesperado na aplicação");
     		this.dispose();
 		}
 		
@@ -247,7 +247,6 @@ public class TelaVisualizacaoDeTarefas extends Tela {
 		
     	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
     	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
-    	final String tipoTarefa = tabela.getName();
     	Object idElementoNoBanco = (Object) tabela.getModel().getValueAt(tabela.getSelectedRow(), 0);
     	
     	String idTarefaRemocaoPendente = idElementoNoBanco.toString();
@@ -270,8 +269,6 @@ public class TelaVisualizacaoDeTarefas extends Tela {
     	int abaAtual = jTabbedPaneContainer.getSelectedIndex();
     	
     	JTable tabela = (JTable) jTabbedPaneContainer.getComponentAt(abaAtual);
-    	final String tipoTarefa = tabela.getName();
-    	Object idElementoNoBanco = (Object) tabela.getModel().getValueAt(tabela.getSelectedRow(), 0);
     	
     	final ArrayList<String> nomesColunas = new ArrayList<String>();
     	final ArrayList<String> conteudoColunas = new ArrayList<String>();

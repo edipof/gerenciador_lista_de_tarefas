@@ -34,11 +34,15 @@ public class TelaEdicaoDeTarefas extends Tela {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TelaEdicaoDeTarefas(ArrayList<String> nomesColunas,ArrayList<String> conteudoColunas, ArrayList<Tarefa> listaTarefasParaEditar, Usuario usuario) {
+	public TelaEdicaoDeTarefas(ArrayList<String> nomesColunas,ArrayList<String> 
+		conteudoColunas, ArrayList<Tarefa> listaTarefasParaEditar,Usuario usuario) {
+		
         geraVisualizacao(nomesColunas, conteudoColunas, listaTarefasParaEditar, usuario);
     }
     
-    private void geraVisualizacao(ArrayList<String> nomesColunas,ArrayList<String> conteudoColunas, final ArrayList<Tarefa> listaTarefasParaEditar, final Usuario usuario) {
+    private void geraVisualizacao(ArrayList<String> nomesColunas,
+    		ArrayList<String> conteudoColunas, final ArrayList<Tarefa> listaTarefasParaEditar, 
+    		final Usuario usuario) {
     	
         final JFrame frame = new JFrame("Editar tarefa");
         final Container painel = frame.getContentPane();
@@ -136,20 +140,41 @@ public class TelaEdicaoDeTarefas extends Tela {
     	
     	if (tarefa != null) {
         	AcaoEditaTarefa a = new AcaoEditaTarefa();
+        	
     		a.atualizaTarefa(tarefa, dadosFormulario);
     		/*depois da validacao: */ 
     		JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
 		}
     }
     public Boolean isValido(Tarefa tarefa, ArrayList<String> dadosFormulario){
-		Boolean isValido = false;
+		Boolean isValido = true;
     	if (tarefa instanceof TarefaSimples) {
-			return true;
+			return isValido;
 		} else if (tarefa instanceof TarefaProgressiva) {
+			//se for instancia de tarefa progressiva verifica data e progresso
+			if (dadosFormulario.get(2).matches("([0-9]{2})/([0-9]{2})/([0-9]{4})") == false){
+				JOptionPane.showMessageDialog(null, "A data deve estar no formato dd/mm/aaaa");
+				isValido=false;
+				return isValido;
+        	}else if(Long.parseLong(dadosFormulario.get(3)) < 0 || 
+        			Long.parseLong(dadosFormulario.get(3)) > 100 ){
+        		JOptionPane.showMessageDialog(null, "O progresso deve estrar entre 0 e 100");
+        		isValido=false;
+        		return isValido;
+        	}
 			
 		} else if (tarefa instanceof Lembrete) {
-			//verifica data e hora
-			//seta isValido true ou false
+			//se for instancia de tarefa lembrete verifica data e hora
+			if (dadosFormulario.get(2).matches("([0-9]{2})/([0-9]{2})/([0-9]{4})") == false){
+				JOptionPane.showMessageDialog(null, "A data deve estar no formato dd/mm/aaaa");
+				isValido=false;
+				return isValido;
+			}
+			else if (dadosFormulario.get(3).matches("([0-9]{2}):([0-9]{2})") == false){
+				JOptionPane.showMessageDialog(null, "A hora deve estar no formato HH:MM");
+				isValido=false;
+				return isValido;
+        	}
 		}
     	return false;
     }
