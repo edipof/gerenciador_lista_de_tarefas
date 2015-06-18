@@ -1,4 +1,4 @@
-BIN = TP2.jar
+BIN = TP.jar
 JCR = java
 
 #Argumentos de entrada
