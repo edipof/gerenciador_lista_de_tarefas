@@ -24,7 +24,7 @@ public class Alarme implements Runnable{
 	}
 	
 	private void getLembretes(){
-		ManipuladorTarefaLembrete l = new ManipuladorTarefaLembrete();
+		ManipuladorTarefaLembrete l = ManipuladorTarefaLembrete.getInstance();
 		this.lembretes = l.selectListaEntidadeComParametro(this.usuario);
 	}
 	

@@ -9,7 +9,7 @@ import model.operacoesBD.ManipuladorUsuario;
 
 public class AcaoTelaInicial {
 	
-	ManipuladorBancoDados<Usuario> mdb = new ManipuladorUsuario();
+	ManipuladorBancoDados<Usuario> mdb = ManipuladorUsuario.getInstance();
 	
 	public ArrayList<Usuario> buscarListaUsuarios() throws SQLException{
 		

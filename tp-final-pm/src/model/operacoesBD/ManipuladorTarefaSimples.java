@@ -13,6 +13,16 @@ public class ManipuladorTarefaSimples extends ManipuladorBancoDados<TarefaSimple
 	private boolean retorno = false;
 	private ComandosSqlSingleton sql = getComandosSQL();
 	
+	private static ManipuladorTarefaSimples instancia;
+	
+	private ManipuladorTarefaSimples(){
+	}
+	
+	public static synchronized ManipuladorTarefaSimples getInstance() {
+		if (instancia == null)
+			instancia = new ManipuladorTarefaSimples();
+		return instancia;
+	}
 	@Override
 	public ArrayList<TarefaSimples> selectListaEntidade() {
 		return null;

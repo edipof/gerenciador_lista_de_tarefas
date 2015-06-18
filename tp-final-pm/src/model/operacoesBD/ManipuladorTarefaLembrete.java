@@ -12,6 +12,16 @@ import model.entidade.Usuario;
 public class ManipuladorTarefaLembrete extends ManipuladorBancoDados<Lembrete> {
 	private boolean retorno = false;
 	private ComandosSqlSingleton sql = getComandosSQL();
+	private static ManipuladorTarefaLembrete instancia;
+	
+	private ManipuladorTarefaLembrete(){
+	}
+	
+	public static synchronized ManipuladorTarefaLembrete getInstance() {
+		if (instancia == null)
+			instancia = new ManipuladorTarefaLembrete();
+		return instancia;
+	}
 	
 	@Override
 	public ArrayList<Lembrete> selectListaEntidade() {
